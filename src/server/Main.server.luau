@@ -2,13 +2,15 @@
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
+local Config = require(ReplicatedStorage:WaitForChild("MedievalShared"):WaitForChild("Config"))
+local worldMode = Config.Game.Mode == "Kingdoms"
 
 Players.CharacterAutoLoads = false
 
 local remotesFolder = Instance.new("Folder")
 remotesFolder.Name = "MedievalRemotes"
 local remotes = {}
-for _, name in ipairs({ "Action", "State", "Effects", "Lobby", "Profile" }) do
+for _, name in ipairs({ "Action", "State", "Effects", "Lobby", "Profile", "World" }) do
 	local remote = Instance.new("RemoteEvent")
 	remote.Name = name
 	remote.Parent = remotesFolder
@@ -16,20 +18,21 @@ for _, name in ipairs({ "Action", "State", "Effects", "Lobby", "Profile" }) do
 end
 remotesFolder.Parent = ReplicatedStorage
 
-local MapBuilder = require(script.Parent.MapBuilder)
+local MapBuilder = require(worldMode and script.Parent.WorldMapBuilder or script.Parent.MapBuilder)
 local CombatService = require(script.Parent.CombatService)
-local MatchService = require(script.Parent.MatchService)
+local SessionService = require(worldMode and script.Parent.WorldService or script.Parent.MatchService)
 local ProfileService = require(script.Parent.ProfileService)
 
 local map = MapBuilder.Build()
 local combat = CombatService.new(remotes)
 local profiles = ProfileService.new(remotes)
-local match = MatchService.new(remotes, map, combat, profiles)
+local session = SessionService.new(remotes, map, combat, profiles)
 local lastReady = {}
 local lastFeedback = {}
 local buckets = {}
 local appearanceConnections = {}
 local appearanceQueued = {}
+local worldActions = { ChooseKingdom = true, Harvest = true, BuildOutpost = true, SetOutpostSpawn = true }
 local feedback = {
 	Stamina = "Pas assez d'endurance.",
 	FullHealth = "Votre sante est deja au maximum.",
@@ -52,6 +55,24 @@ local feedback = {
 	PlayerUnavailable = "Ce joueur n'est pas disponible au lobby.",
 	Expired = "Cette invitation a expire.",
 	UnknownInvite = "Cette invitation n'est plus disponible.",
+	UnknownKingdom = "Choose one of the available kingdoms.",
+	AlreadyKingdom = "You already belong to this kingdom.",
+	KingdomCooldown = "Wait for the kingdom change cooldown.",
+	InCombat = "Rest out of combat before changing kingdom.",
+	CombatLocked = "Rest out of combat before changing kingdom.",
+	ChooseKingdom = "Choose a kingdom first.",
+	HarvestCooldown = "Wait before gathering again.",
+	Depleted = "This resource is regrowing. Find another node.",
+	OutOfRange = "Move closer to interact.",
+	TooFar = "Move closer to interact.",
+	Blocked = "There is an obstacle between you and the resource.",
+	Obstructed = "There is an obstacle between you and the interaction point.",
+	NotOwner = "Your kingdom must control this flag.",
+	AlreadyBuilt = "This outpost has already been built.",
+	InsufficientWood = "Gather more wood first.",
+	InsufficientOre = "Mine more ore first.",
+	NotBuilt = "Build this owned outpost before using it as a spawn.",
+	Contested = "Clear the enemy from the capture zone first.",
 }
 
 local function refreshAppearance(player)
@@ -75,7 +96,7 @@ local function addPlayer(player)
 		end))
 	end
 	profiles:AddPlayer(player)
-	match:AddPlayer(player)
+	session:AddPlayer(player)
 end
 Players.PlayerAdded:Connect(addPlayer)
 Players.PlayerRemoving:Connect(function(player)
@@ -85,7 +106,7 @@ Players.PlayerRemoving:Connect(function(player)
 	appearanceQueued[player] = nil
 	for _, connection in ipairs(appearanceConnections[player] or {}) do connection:Disconnect() end
 	appearanceConnections[player] = nil
-	match:RemovePlayer(player)
+	session:RemovePlayer(player)
 	profiles:RemovePlayer(player)
 end)
 for _, player in ipairs(Players:GetPlayers()) do
@@ -106,14 +127,16 @@ remotes.Action.OnServerEvent:Connect(function(player, action, payload)
 	if action == "Ready" then
 		if now - (lastReady[player] or -math.huge) >= 0.5 then
 			lastReady[player] = now
-			match:SendState(player)
-			match:SendLobby(player)
+			session:SendState(player)
+			if not worldMode then session:SendLobby(player) end
 			profiles:SendProfile(player)
 		end
 	else
 		local accepted, reason
-		if action == "Invite" or action == "InviteRespond" or action == "InviteCancel" then
-			accepted, reason = match:HandleLobbyAction(player, action, payload or {})
+		if worldMode and worldActions[action] then
+			accepted, reason = session:HandleAction(player, action, payload or {})
+		elseif not worldMode and (action == "Invite" or action == "InviteRespond" or action == "InviteCancel") then
+			accepted, reason = session:HandleLobbyAction(player, action, payload or {})
 		elseif action == "BuySword" or action == "EquipSword" or action == "ChooseFaction" then
 			accepted, reason = profiles:HandleAction(player, action, payload or {})
 			if accepted then refreshAppearance(player) end
@@ -121,6 +144,9 @@ remotes.Action.OnServerEvent:Connect(function(player, action, payload)
 			accepted, reason = combat:HandleAction(player, action, payload or {})
 		end
 		local text = not accepted and feedback[reason]
+		if not accepted and reason == "Cooldown" and (action == "Attack" or action == "Harvest") then
+			text = "Wait for your sword swing to recover."
+		end
 		if not accepted and action == "Potion" and reason == "Cooldown" then
 			local state = combat:GetState(player)
 			local remaining = state and math.max(0, math.ceil((state.PotionReadyAt or 0) - workspace:GetServerTimeNow())) or 0
@@ -133,10 +159,10 @@ remotes.Action.OnServerEvent:Connect(function(player, action, payload)
 	end
 end)
 
-match:Start()
+session:Start()
 RunService.Heartbeat:Connect(function(dt)
 	combat:Step(dt)
-	match:Step(dt)
+	session:Step(dt)
 	profiles:Step(dt)
 end)
 
@@ -144,4 +170,5 @@ game:BindToClose(function()
 	profiles:Close()
 end)
 
-print("[Fer & Fioles] Lobby pret : invitations PvP, cosmetiques et potions Z/X/C.")
+print(worldMode and "[Fer & Fioles] Kingdom world ready: sword combat, resources, flags and outposts."
+	or "[Fer & Fioles] Lobby ready: PvP invitations, cosmetics and potions Z/X/C.")

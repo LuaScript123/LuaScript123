@@ -11,7 +11,7 @@
     },
     "Workspace": {
       "$properties": {"FilteringEnabled": true},
-      "FerEtFiolesArena": {"$path": "assets/Arena.rbxmx"}
+      "FerEtFiolesArena": {"$path": "assets/Kingdoms.rbxmx"}
     },
     "Lighting": {
       "$properties": {

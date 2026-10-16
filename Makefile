@@ -5,6 +5,7 @@ check:
 	bash tools/check.sh
 map:
 	python3 tools/export-map.py
+	python3 tools/export-world.py
 build: map
 	mkdir -p build
 	.tools/bin/rojo build default.project.json --output build/FerEtFioles.rbxlx

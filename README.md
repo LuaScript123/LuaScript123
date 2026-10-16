@@ -1,80 +1,74 @@
-# Fer & Fioles — Lobby PvP
+# Fer & Fioles — Kingdom Warfare
 
-Jeu Roblox medieval original avec lobby, demandes de combat **1v1 ou 2v2**, pieces et epees cosmetiques. Aucun combat automatique ou farming de PNJ. L'epee est la seule attaque : deux frappes horizontales alternees, aucune parade ni coup de pied, deplacement libre.
+An original Roblox kingdom battlefield with sword-only combat, stamina, delayed health regeneration, trees, mines, capturable flags and buildable outposts. No parry, block or kick actions.
 
-## Telecharger et jouer
+The Medieval Warfare Reforged videos and the [wiki supplied by the user](https://official-medieval-warfare-reforged.fandom.com/wiki/Official_Medieval_Warfare_Reforged_Wikia) are currently blocked by this environment's network allowlist (HTTP 403). The mechanics below implement the requested systems; kingdom names, visuals and numerical settings are project defaults, **not verified reproductions of that game**. [Current schematics and tuning](docs/KINGDOM_WORLD.md) record the exact implementation and pending calibration.
 
-1. [Telechargez le ZIP de la nouvelle version](releases/FerEtFioles.zip?raw=1) et decompressez-le.
-2. Dans **Roblox Studio > Fichier > Ouvrir depuis un fichier**, ouvrez `FerEtFioles/build/FerEtFioles.rbxlx`. [Le fichier Roblox seul](releases/FerEtFioles.rbxlx?raw=1) est aussi disponible.
-3. Lancez **Play**. Vous apparaissez dans le lobby; le bouton **MENU PvP** ouvre les demandes, la boutique et les factions.
-4. Dans l'onglet **Test**, lancez un serveur avec **2 joueurs** pour un duel ou **4 joueurs** pour un 2v2. Les autres doivent etre dans le meme serveur : aucun bot ne remplit une place.
+## Open and play
 
-Le fichier contient la carte et les scripts; aucun modele du catalogue ou asset payant n'est necessaire. Vous pouvez publier la place depuis Studio sur votre compte.
+1. Download [the ZIP](releases/FerEtFioles.zip?raw=1) or [the standalone place](releases/FerEtFioles.rbxlx?raw=1).
+2. In Roblox Studio, use **File > Open from File** to open `FerEtFioles/build/FerEtFioles.rbxlx` from the ZIP, or the standalone place.
+3. Press **Play** and choose a kingdom. Solo play supports gathering and capturing; use **Test > Server & Clients** with two or more players for enemy combat and contested flags.
 
-## Invitations et combats
+All scripts and original primitive scenery are included. No paid models, external animation assets or live wiki requests are required.
 
-- **Duel** : choisissez un adversaire dans la liste, puis envoyez la demande.
-- **2v2** : choisissez votre allie et deux adversaires. Les trois joueurs doivent accepter.
-- Delai de **15 secondes** entre vos invitations; une demande expire apres **25 secondes**. Refuser, annuler ou quitter libere tous les joueurs concernes.
-- Une arene fonctionne a la fois; les autres joueurs restent libres dans le lobby. Une invitation acceptee teleporte uniquement ses participants.
-- Une seule vie par combat. Apres une mort, vous regardez les survivants jusqu'au resultat. La derniere equipe en vie gagne; une double elimination est une egalite.
-- Les resultats restent affiches 6 secondes, puis les participants retournent au lobby. Aucun nouveau combat ne commence sans invitation acceptee.
-- Quitter pendant un combat donne un forfait, sans pieces pour ce combat. Une preparation annulee ne donne aucune recompense.
+## World loop
 
-## Commandes
+- Choose Redcliff, Korblox, Greywolf or Overseer and spawn at its keep. These four identities are retained project choices, pending reference verification.
+- Strike enemies with alternating horizontal sword swings. The server checks stamina, cooldown, range, arc, line of sight, team and protection. Allies take no sword damage.
+- Use **E** or **Harvest** beside a tree or ore node. Hits spend stamina; the final accepted strike awards wood or ore. Depleted nodes disappear and return on their timers.
+- Stand at Westwatch, Eastwatch or Southwatch to capture its flag. Different kingdoms in the zone contest it and freeze progress. More allies do not accelerate capture.
+- Spend **30 wood + 15 ore** to fortify a nearby owned, uncontested flag. Select an owned built outpost in the menu to respawn there. Lost or unbuilt outposts fall back to the kingdom base.
+- Death returns you after **5 seconds**, with fresh health, stamina and potions. Inventory survives death. There are no automatic duel rounds in the default world mode.
 
-| Touche | Action |
+The map has four keeps, a forest, quarry, three flag sites, **16 trees and 12 ore nodes**, built from 394 static primitives. The protected kingdom-selection area is isolated from the battlefield.
+
+## Controls
+
+| Input | Action |
 | --- | --- |
-| Controles Roblox habituels | Marcher, camera et saut |
-| Clic gauche | Frapper, alternativement gauche-droite puis droite-gauche |
-| Maj maintenue | Sprint pendant le combat |
-| **Ctrl gauche ou droit** | Activer/desactiver le verrouillage camera a l'epaule |
-| **Z** | Petite potion : +20 PV, 3 par combat |
-| **X** | Potion moyenne : +45 PV, 2 par combat |
-| **C** | Grosse potion : +75 PV, 1 par combat |
-| Tab | Tableau des joueurs |
+| Standard Roblox controls | Move, look and jump |
+| Left click / touch sword | One sword attack |
+| Hold Shift / touch sprint | Sprint |
+| Ctrl / camera button | Toggle shoulder camera lock |
+| E / Harvest button | Chop a nearby tree or mine ore |
+| M / Kingdoms button | Choose a kingdom, build and select outpost respawn |
+| Z / X / C | Small / medium / large potion |
+| Hold Tab | Player scoreboard |
 
-Le menu, le chat et le mode spectateur liberent temporairement la souris. Fermer le menu restaure le verrouillage Ctrl. Les boutons tactiles sont aussi disponibles. Les touches potions utilisent les KeyCode Roblox; adaptez-les dans le client au besoin selon votre clavier.
+Menus, text entry and spectating suspend combat input or camera lock as appropriate. Mobile has explicit interaction and combat buttons.
 
-Chaque combattant commence avec **100 PV et 100 endurance**. Une frappe coute 10 endurance et inflige 25 degats, avec 0,45 s entre les coups. Le sprint consomme 1 endurance/s en mouvement. L'endurance revient a 5/s apres 1,5 s sans depense. Les trois potions partagent **60 secondes** de cooldown, affiche sur les boutons. Les soins sont plafonnes a 100 PV et ne consomment rien a pleine sante. Les ressources reviennent au debut de chaque combat. Aucun soin passif, aucun degat aux allies. Le lobby est protege et ne permet pas d'attaquer.
+## Current tuning
 
-## Pieces, boutique et factions
+All values live in [src/shared/Config.luau](src/shared/Config.luau), shared by the authoritative server and interface.
 
-Un combat termine par elimination attribue **50 pieces aux gagnants**, **10 aux perdants**, ou **10 a chacun en cas d'egalite**. Le serveur calcule et attribue la recompense une fois par combat; le client ne peut pas choisir les montants.
+| Mechanic | Project default |
+| --- | --- |
+| Health / stamina | 100 / 100 |
+| Sword damage / cost / cooldown | 25 HP / 10 stamina / 0.45 s |
+| Sprint drain / stamina recovery | 1 per moving second / 5 per second after 1.5 s without spending |
+| Health regeneration | 2 HP/s after 8 s without damage, attacks or gathering |
+| Potions | +20 / +45 / +75 HP; stock 3 / 2 / 1 per life; shared 60 s cooldown |
+| Gathering | 10 stamina; one strike per second |
+| Trees | Four hits; eight wood on depletion; regrow after 45 s |
+| Mines | Five hits; five ore on depletion; return after 60 s |
+| Flags | 18-stud radius; 15 s uncontested capture |
+| Kingdom switching | 60 s cooldown; 8 s out of combat; alive character required |
 
-| Epee | Prix |
-| --- | ---: |
-| Epee de fer | Gratuite au depart |
-| Lame Redcliff | 100 |
-| Croc Korblox | 150 |
-| Acier Greywolf | 200 |
-| Oeil Overseer | 250 |
+Wood, ore, kingdom membership, kills/deaths and all world ownership are **server-session state**. Rejoining resets player world inventory; a new server resets the world. The existing cosmetic/coin profile system remains separate; no world persistence or global kingdom economy is implied.
 
-Les epees ont toutes exactement les memes degats, portee, vitesse et cout d'endurance. Seuls les couleurs et les details visuels changent. Achetez puis equipez l'epee dans la boutique du lobby.
-
-Choisissez gratuitement **Redcliff, Korblox, Greywolf ou Overseer** dans l'onglet Factions. Chaque choix applique une armure originale faite de primitives, sans avantage de combat. La faction est independante de l'equipe bleue/rouge du match. Les clans et leur classement restent prevus pour une prochaine version.
-
-## Sauvegarde
-
-Sur une experience Roblox publiee, les pieces, epees possedees, epee equipee, faction et victoires/defaites utilisent DataStoreService. Bail de session, sauvegarde automatique toutes les 60 s, au depart et a la fermeture. Un echec de chargement ou un profil deja ouvert ne remplace jamais les donnees par un profil vide.
-
-Dans Studio non publie, ou si l'acces DataStore echoue, un message **Mode session** indique que ces choix ne sont pas conserves en quittant. Pour tester la persistance dans Studio, publiez l'experience puis activez **Parametres du jeu > Securite > Activer l'acces Studio aux services API**. L'option HTTP n'est pas necessaire.
-
-## Developpement et validation
+## Development and validation
 
 ```sh
-make setup       # Rojo 7.7.1 et Luau 0.742, archives verifiees SHA-256
-make check       # Compiler les sources et executer les tests
-make build       # Regenerer carte + build/FerEtFioles.rbxlx
-make studio-test # Place separee avec smoke tests du moteur Roblox
-make package     # Reconstruire places, ZIP et copies dans releases/
-make serve       # Synchroniser les sources avec le plugin Rojo
+make setup       # Checksum-verified Rojo 7.7.1 + Luau 0.742 (Linux x86-64)
+make check       # Compile sources and execute rules + service lifecycle tests
+make map         # Export and validate both original maps
+make build       # Build build/FerEtFioles.rbxlx
+make studio-test # Build the separate engine smoke-test place
+make package     # Refresh places, source ZIP and releases/
+make serve       # Start Rojo source synchronization
 ```
 
-Sous Windows/macOS, le fichier .rbxlx fourni s'ouvre sans Rojo. Pour reconstruire depuis les sources, installez Rojo et executez `rojo build default.project.json -o build/FerEtFioles.rbxlx` (creez build au besoin). Le modele genere dans assets contient deja le lobby.
+CLI checks cover combat, recovery, kingdom selection, shared resources, contested captures, construction, respawn races, profiles and the retained duel mode. Service tests execute real modules with explicit clock/character/network doubles; they do not simulate Roblox physics or networking. Map export validates supported, clear spawns, reachable resources and clear roads. Roblox Studio remains necessary to validate animations, mobile layout, real multiplayer and engine behavior; see the checklist in [the schematics](docs/KINGDOM_WORLD.md).
 
-**113 tests CLI reussis** : 26 combat, 19 rosters, 18 invitations, 15 regles de profil, 20 scenarios du service de matchs et 15 scenarios du service de profils. Les tests de services executent les vraies sources avec des doubles explicites de temps, personnages et DataStore; ils ne simulent pas la physique ni le reseau Roblox. La carte compte 538 primitives, avec 14 spawns et leurs sols verifies. Les scripts compilent et Rojo construit les places.
-
-Le moteur Roblox n'est pas disponible dans cet environnement Linux : animations, camera, interface tactile, jeu multijoueur et vraie persistance restent a verifier dans Studio. La video de reference YouTube n'etait pas accessible depuis l'environnement; le jeu suit les precisions ecrites de la demande et utilise ses propres decors et assets proceduraux.
-
-Valeurs de jeu : `src/shared/Config.luau`. Prix, factions et couleurs : `src/shared/Catalog.luau`. Geometrie : `src/server/MapBuilder.luau`; modifier ce module plutot que le modele genere, qui est reconstruit a Play.
+Set `Config.Game.Mode = "Lobby"` to use the retained invitation-based 1v1/2v2 mode instead. Its documentation is [LOBBY_CONTRACT.md](docs/LOBBY_CONTRACT.md). Each mode constructs only its own lifecycle service.

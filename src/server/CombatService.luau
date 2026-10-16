@@ -65,7 +65,7 @@ local function selectedAppearance(subject)
     local factionId = Catalog.DefaultFaction
     if isPlayer(subject) then
         local equipped = subject:GetAttribute("EquippedSword")
-        local faction = subject:GetAttribute("FactionId")
+        local faction = subject:GetAttribute("KingdomId") or subject:GetAttribute("FactionId")
         if type(equipped) == "string" and Catalog.Swords[equipped] then
             swordId = equipped
         end
@@ -237,6 +237,10 @@ function CombatService:_sync(state, now)
     state.Model:SetAttribute("SpawnProtected", not state.Dead and now < state.SpawnProtectedUntil)
     state.Model:SetAttribute("PotionReadyAt", state.PotionReadyAt or 0)
     state.Model:SetAttribute("PotionCooldown", Config.PotionCooldown)
+    local serverNow = Workspace:GetServerTimeNow()
+    state.Model:SetAttribute("AttackReadyAt", serverNow + math.max(0, state.LastAttackAt + Config.Combat.AttackCooldown - now))
+    local lastCombat = math.max(state.LastDamagedAt, state.LastAttackAt, state.LastWorkAt)
+    state.Model:SetAttribute("HealthRegenReadyAt", serverNow + math.max(0, lastCombat + Config.Player.HealthRegenDelay - now))
     for _, size in ipairs(Config.PotionOrder) do
         state.Model:SetAttribute("Potions" .. size, state.Potions[size])
     end
@@ -292,8 +296,14 @@ function CombatService:Register(subject, model, teamId)
     humanoid.MaxHealth = Config.Player.MaxHealth
     humanoid.Health = Config.Player.MaxHealth
     humanoid.WalkSpeed = Config.Player.WalkSpeed
+    state.LastObservedHealth = humanoid.Health
     state.DeathConnection = humanoid.Died:Connect(function()
         self:_markDead(state)
+    end)
+    local previousHealth = humanoid.Health
+    state.DamageConnection = humanoid.HealthChanged:Connect(function(health)
+        if health < previousHealth then state.LastDamagedAt = os.clock() end
+        previousHealth = health
     end)
     self._states[subject] = state
     if isPlayer(subject) then
@@ -312,6 +322,7 @@ function CombatService:Unregister(subject)
     if state.DeathConnection then
         state.DeathConnection:Disconnect()
     end
+    if state.DamageConnection then state.DamageConnection:Disconnect() end
     if state.SwordTween then
         state.SwordTween:Cancel()
         state.SwordTween = nil
@@ -437,6 +448,25 @@ function CombatService:HandleAction(player, action, payload)
     return self:Act(player, action, payload)
 end
 
+function CombatService:SpendEffort(subject, cost)
+    local state = self._states[subject]
+    if not self._enabled or not state or state.Dead or state.Humanoid.Health <= 0
+        or not state.Model.Parent or not state.Root.Parent then
+        return false, "Dead"
+    end
+    if state.PendingAttack then return false, "Cooldown" end
+    local now = os.clock()
+    local accepted, reason = Rules.ConsumeEffort(state, Config, now, cost)
+    if not accepted then return false, reason end
+    self:_swing(state, state.SwingSide)
+    self:_effect("Swing", {
+        Actor = state.Model, Position = state.Root.Position,
+        Direction = state.Root.CFrame.LookVector, TeamId = state.TeamId, Side = state.SwingSide,
+    })
+    self:_sync(state, now)
+    return true
+end
+
 function CombatService:_resolveAttack(attacker, direction, now)
     if not self._enabled or attacker.Dead or attacker.Humanoid.Health <= 0 or not attacker.Root.Parent then
         return
@@ -478,6 +508,9 @@ function CombatService:_resolveAttack(attacker, direction, now)
             target.Humanoid:TakeDamage(Config.Combat.AttackDamage)
             local damage = math.max(0, before - target.Humanoid.Health)
             if damage > 0 then
+                -- Record this synchronously; Roblox may defer HealthChanged.
+                target.LastDamagedAt = now
+                target.LastObservedHealth = target.Humanoid.Health
                 self:_effect("Hit", { Actor = attacker.Model, Target = target.Model, Position = target.Root.Position, Damage = damage, TeamId = attacker.TeamId })
                 if target.Humanoid.Health <= 0 then
                     self:_markDead(target)
@@ -502,6 +535,10 @@ function CombatService:Step(dt)
             if state.Humanoid.Health <= 0 then
                 self:_markDead(state)
             elseif not state.Dead then
+                if state.Humanoid.Health < state.LastObservedHealth then
+                    state.LastDamagedAt = now
+                end
+                state.LastObservedHealth = state.Humanoid.Health
                 if state.PendingAttack and now >= state.PendingAttack.At then
                     local attack = state.PendingAttack
                     state.PendingAttack = nil
@@ -511,6 +548,9 @@ function CombatService:Step(dt)
                 local moving = finiteVector(velocity) and Vector3.new(velocity.X, 0, velocity.Z).Magnitude > 0.75
                 local wasSprinting = state.Sprinting
                 Rules.TickStamina(state, Config, dt, now, moving)
+                local restored = Rules.RecoverHealth(state, Config, dt, now, state.Humanoid.Health, state.Humanoid.MaxHealth)
+                if restored > state.Humanoid.Health then state.Humanoid.Health = restored end
+                state.LastObservedHealth = state.Humanoid.Health
                 if wasSprinting ~= state.Sprinting then
                     state.Humanoid.WalkSpeed = state.Sprinting and Config.Player.SprintSpeed or Config.Player.WalkSpeed
                 end

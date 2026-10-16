@@ -1,3 +1,5 @@
+> Historical lobby-mode documentation. The current default kingdom world, health regeneration and world systems are documented in [KINGDOM_WORLD.md](KINGDOM_WORLD.md). The earlier no-regeneration/lobby-only requirements below have been superseded by the current request.
+
 # Lobby PvP, progression et controles
 
 Conserver epee seule, aucun block/parry/kick, mouvement libre, stamina100/-10coup/-1s sprint, potions ZXC et cooldown COMMUN60. Pas de clan/classement maintenant. Lien YouTube inaccessible (403), ne pas pretendre avoir vu la video.

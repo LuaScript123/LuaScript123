@@ -22,6 +22,8 @@ function Rules.NewState(config, now)
         LastAttackAt = -math.huge,
         LastSpendAt = now,
         LastPotionAt = -math.huge,
+        LastDamagedAt = now,
+        LastWorkAt = -math.huge,
         NextSwingSide = 1,
         SwingSide = nil,
         Potions = potions,
@@ -47,6 +49,39 @@ function Rules.ConsumeAttack(state, config, now)
     -- Taking an offensive action ends the attacker's own protection.
     state.SpawnProtectedUntil = 0
     return true
+end
+
+-- Gathering and combat share the swing lock, so a player cannot mine and
+-- strike another player in the same instant. Only the server supplies cost.
+function Rules.ConsumeEffort(state, config, now, cost)
+    if not Rules.IsFinite(now) or not Rules.IsFinite(cost) or cost <= 0 then
+        return false, "Malformed"
+    end
+    if state.Dead then return false, "Dead" end
+    if now - state.LastAttackAt < config.Combat.AttackCooldown then
+        return false, "Cooldown"
+    end
+    if state.Stamina < cost then return false, "Stamina" end
+    state.Stamina = math.max(0, state.Stamina - cost)
+    state.LastAttackAt, state.LastSpendAt, state.LastWorkAt = now, now, now
+    state.SwingSide = state.NextSwingSide
+    state.NextSwingSide = -state.SwingSide
+    return true
+end
+
+function Rules.RecoverHealth(state, config, dt, now, health, maxHealth)
+    if state.Dead or not Rules.IsFinite(dt) or dt <= 0 or not Rules.IsFinite(now)
+        or not Rules.IsFinite(health) or not Rules.IsFinite(maxHealth)
+        or health <= 0 or maxHealth <= 0 or health >= maxHealth then
+        return health
+    end
+    local rate, delay = config.Player.HealthRegenPerSecond, config.Player.HealthRegenDelay
+    if not Rules.IsFinite(rate) or rate <= 0 or not Rules.IsFinite(delay) or delay < 0 then
+        return health
+    end
+    local lastCombat = math.max(state.LastDamagedAt or now, state.LastAttackAt or -math.huge, state.LastWorkAt or -math.huge)
+    local eligible = math.min(dt, math.max(0, now - lastCombat - delay))
+    return math.min(maxHealth, health + rate * eligible)
 end
 
 function Rules.TickStamina(state, config, dt, now, moving)

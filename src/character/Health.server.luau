@@ -1,2 +1,3 @@
 -- Intentionally replaces Roblox's default Health script.
--- Health is restored with potions or respawning, not automatic regeneration.
+-- CombatService owns delayed health regeneration, potions and respawn resets.
+-- Do not run Roblox's default regeneration alongside that authoritative timer.

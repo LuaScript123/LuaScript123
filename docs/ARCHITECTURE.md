@@ -1,3 +1,5 @@
+> Historical lobby-mode documentation. The current default kingdom world, health regeneration and world systems are documented in [KINGDOM_WORLD.md](KINGDOM_WORLD.md). The earlier no-regeneration/lobby-only requirements below have been superseded by the current request.
+
 # Architecture — Fer & Fioles Lobby PvP
 
 Le contrat courant est decrit dans [LOBBY_CONTRACT.md](LOBBY_CONTRACT.md).

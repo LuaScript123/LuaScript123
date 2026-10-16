@@ -10,6 +10,7 @@ local StarterGui = game:GetService("StarterGui")
 local player = Players.LocalPlayer
 local shared = ReplicatedStorage:WaitForChild("MedievalShared")
 local Config = require(shared:WaitForChild("Config"))
+local worldMode = Config.Game.Mode == "Kingdoms"
 local Catalog = require(shared:WaitForChild("Catalog"))
 local LobbyUI = require(script.Parent:WaitForChild("LobbyUI"))
 local CameraLock = require(script.Parent:WaitForChild("CameraLock"))
@@ -19,6 +20,7 @@ local State = remotes:WaitForChild("State")
 local Effects = remotes:WaitForChild("Effects")
 local Lobby = remotes:WaitForChild("Lobby")
 local Profile = remotes:WaitForChild("Profile")
+local World = remotes:WaitForChild("World")
 
 pcall(function()
 	StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, false)
@@ -162,9 +164,9 @@ local function makeBar(y, title, color)
 	corners(fill, 5)
 	return { Title = titleLabel, Number = number, Fill = fill }
 end
-local healthBar = makeBar(11, "SANTÉ", palette.Health)
-local staminaBar = makeBar(62, "ENDURANCE", palette.Gold)
-local protectionLabel = label(root, "PROTECTION DE DÉBUT DE MANCHE", {
+local healthBar = makeBar(11, worldMode and "HEALTH" or "SANTÉ", palette.Health)
+local staminaBar = makeBar(62, worldMode and "STAMINA" or "ENDURANCE", palette.Gold)
+local protectionLabel = label(root, worldMode and "SPAWN PROTECTION" or "PROTECTION DE DÉBUT DE MANCHE", {
 	Position = UDim2.new(0, 25, 1, -171), Size = UDim2.fromOffset(300, 20),
 	TextSize = 10, TextColor3 = palette.Gold, Visible = false,
 })
@@ -204,11 +206,11 @@ for order, size in ipairs(Config.PotionOrder) do
 		Position = UDim2.new(0.5, -5, 0, 17), Size = UDim2.fromOffset(10, 4),
 		BackgroundColor3 = palette.Gold, BorderSizePixel = 0,
 	}, slot)
-	label(slot, potion.Name, {
+	label(slot, worldMode and size or potion.Name, {
 		Position = UDim2.new(0, 3, 0, 51), Size = UDim2.new(1, -6, 0, 16),
 		TextSize = 11, TextXAlignment = Enum.TextXAlignment.Center,
 	})
-	label(slot, "+" .. potion.Heal .. " PV", {
+	label(slot, "+" .. potion.Heal .. (worldMode and " HP" or " PV"), {
 		Position = UDim2.new(0, 3, 0, 68), Size = UDim2.new(1, -6, 0, 14),
 		TextSize = 10, TextColor3 = accent, TextXAlignment = Enum.TextXAlignment.Center,
 	})
@@ -223,16 +225,17 @@ for order, size in ipairs(Config.PotionOrder) do
 	potionButtons[size] = { Button = slot, Count = count, Cooldown = cooldown }
 end
 
-local helpLabel = label(root, "CLIC  Frapper · −10 endurance\nMAJ  Courir · −1 endurance/s · CTRL  Caméra\nZ / X / C  Potions · délai commun 60 s", {
+local helpLabel = label(root, worldMode and "CLICK  Sword · SHIFT  Sprint · CTRL  Camera\nE  Gather · M  Kingdoms and outposts\nZ / X / C  Potions · shared cooldown 60 s"
+	or "CLIC  Frapper · −10 endurance\nMAJ  Courir · −1 endurance/s · CTRL  Caméra\nZ / X / C  Potions · délai commun 60 s", {
 	AnchorPoint = Vector2.new(1, 1), Position = UDim2.new(1, -26, 1, -32),
 	Size = UDim2.fromOffset(290, 66), TextSize = 12, TextColor3 = palette.Muted,
 	TextXAlignment = Enum.TextXAlignment.Right, TextYAlignment = Enum.TextYAlignment.Center,
 })
-local attackButton = button(root, "FRAPPER\n−10", {
+local attackButton = button(root, worldMode and "SWING\n−10" or "FRAPPER\n−10", {
 	AnchorPoint = Vector2.new(1, 1), Position = UDim2.new(1, -26, 1, -182),
 	Size = UDim2.fromOffset(91, 77), TextSize = 13, Visible = false,
 })
-local sprintButton = button(root, "COURIR\nmaintenir", {
+local sprintButton = button(root, worldMode and "SPRINT\nhold" or "COURIR\nmaintenir", {
 	AnchorPoint = Vector2.new(1, 1), Position = UDim2.new(1, -128, 1, -164),
 	Size = UDim2.fromOffset(85, 63), TextSize = 11, Visible = false,
 })
@@ -248,6 +251,11 @@ local hitMarker = label(root, "", {
 	Size = UDim2.fromOffset(120, 25), TextColor3 = palette.Gold,
 	TextSize = 20, Font = Enum.Font.GothamBold, TextXAlignment = Enum.TextXAlignment.Center,
 })
+local swingStatus = label(root, "", {
+	AnchorPoint = Vector2.new(0.5, 0), Position = UDim2.new(0.5, 0, 0.5, 22),
+	Size = UDim2.fromOffset(160, 20), TextSize = 10, TextColor3 = palette.Muted,
+	TextXAlignment = Enum.TextXAlignment.Center, Visible = false,
+})
 local damageFlash = create("Frame", {
 	Size = UDim2.fromScale(1, 1), BackgroundColor3 = palette.Danger,
 	BackgroundTransparency = 1, BorderSizePixel = 0, ZIndex = 8,
@@ -255,11 +263,11 @@ local damageFlash = create("Frame", {
 
 local toast = panel(root, {
 	AnchorPoint = Vector2.new(0.5, 0), Position = UDim2.new(0.5, 0, 0, 105),
-	Size = UDim2.fromOffset(390, 42), Visible = false, ZIndex = 12,
+	Size = UDim2.fromOffset(390, 42), Visible = false, ZIndex = worldMode and 60 or 12,
 })
 local toastText = label(toast, "", {
 	Position = UDim2.fromOffset(12, 4), Size = UDim2.new(1, -24, 1, -8),
-	TextSize = 12, TextWrapped = true, TextXAlignment = Enum.TextXAlignment.Center, ZIndex = 13,
+	TextSize = 12, TextWrapped = true, TextXAlignment = Enum.TextXAlignment.Center, ZIndex = worldMode and 61 or 13,
 })
 local feed = create("Frame", {
 	AnchorPoint = Vector2.new(1, 0), Position = UDim2.new(1, -24, 0, 103),
@@ -320,6 +328,7 @@ local character = player.Character
 local humanoid
 local deadAt
 local snapshot
+local worldSnapshot
 local receivedAt = 0
 local shiftHeld = {}
 local touchSprintInput
@@ -353,7 +362,9 @@ local function alive()
 end
 
 local function canAct()
-	return alive() and activity() == "Battle" and snapshot ~= nil and snapshot.Phase == "Battle" and not menuOpen()
+	local activeSession = worldMode and activity() == "World" and character and character:GetAttribute("Combatant") == true
+		or (not worldMode and activity() == "Battle" and snapshot ~= nil and snapshot.Phase == "Battle")
+	return alive() and activeSession and not menuOpen()
 		and player:GetAttribute("Spectating") ~= true and player:GetAttribute("Eliminated") ~= true
 end
 
@@ -472,12 +483,25 @@ end
 scoresButton.Activated:Connect(function() showScoreboard(not scoreboard.Visible) end)
 closeScores.Activated:Connect(function() showScoreboard(false) end)
 
-lobbyUI = LobbyUI.new(player, root, Action, Config, Catalog, function(open)
-	if open then releaseSprint() end
-	cameraLock:SetMenuOpen(open or scoreboard.Visible)
-end)
-Lobby.OnClientEvent:Connect(function(lobby) lobbyUI:SetLobby(lobby) end)
-Profile.OnClientEvent:Connect(function(profile) lobbyUI:SetProfile(profile) end)
+if worldMode then
+	local WorldUI = require(script.Parent:WaitForChild("WorldUI"))
+	lobbyUI = WorldUI.new(player, root, Action, Config, function(open)
+		if open then releaseSprint() end
+		cameraLock:SetMenuOpen(open or scoreboard.Visible)
+	end)
+	World.OnClientEvent:Connect(function(state)
+		if type(state) ~= "table" then return end
+		worldSnapshot = state
+		lobbyUI:SetWorld(state)
+	end)
+else
+	lobbyUI = LobbyUI.new(player, root, Action, Config, Catalog, function(open)
+		if open then releaseSprint() end
+		cameraLock:SetMenuOpen(open or scoreboard.Visible)
+	end)
+	Lobby.OnClientEvent:Connect(function(lobby) lobbyUI:SetLobby(lobby) end)
+	Profile.OnClientEvent:Connect(function(profile) lobbyUI:SetProfile(profile) end)
+end
 
 UserInputService.InputBegan:Connect(function(input, processed)
 	if processed or UserInputService:GetFocusedTextBox() then return end
@@ -557,15 +581,23 @@ local function layout()
 	sprintButton.Visible = touch and activity() == "Battle"
 	lockButton.Visible = touch
 	lockButton.Position = UDim2.new(1, -26, 1, narrowTouch and -326 or -263)
+	if worldMode and narrowTouch then
+		lockButton.AnchorPoint = Vector2.new(1, 0)
+		lockButton.Position = UDim2.new(1, -16, 0, 132)
+		lockButton.Size = UDim2.fromOffset(65, 49)
+	else
+		lockButton.AnchorPoint = Vector2.new(1, 1)
+		lockButton.Size = UDim2.fromOffset(85, 49)
+	end
 	scorePanel.Size = UDim2.fromOffset(math.min(compact and 390 or 460, viewport.X - 30), compact and 66 or 76)
 	blueScore.TextSize = compact and 15 or 20
 	redScore.TextSize = compact and 15 or 20
 	phaseLabel.Position = UDim2.new(0, 10, 0, compact and 43 or 47)
 	phaseLabel.TextSize = compact and 10 or 11
-	scoresButton.Text = compact and "JOUEURS" or "JOUEURS · TAB"
+	scoresButton.Text = worldMode and (compact and "PLAYERS" or "PLAYERS · TAB") or (compact and "JOUEURS" or "JOUEURS · TAB")
 	scoresButton.Size = UDim2.fromOffset(compact and 87 or 141, 33)
 	scoresButton.Position = UDim2.new(1, -16, 0, compact and 88 or 23)
-	vitals.Size = UDim2.fromOffset(compact and 245 or 290, compact and 92 or 118)
+	vitals.Size = UDim2.fromOffset(compact and math.min(245, math.max(150, viewport.X - 120)) or 290, compact and 92 or 118)
 	if compact then
 		vitals.AnchorPoint = Vector2.new(0, 0)
 		vitals.Position = UDim2.fromOffset(15, 88)
@@ -581,7 +613,7 @@ local function layout()
 		staminaBar.Fill.Parent.Position = UDim2.fromOffset(15, 85)
 		protectionLabel.Position = UDim2.new(0, 25, 1, -171)
 	end
-	local slotWidth = narrowTouch and 70 or (compact and 75 or 94)
+	local slotWidth = narrowTouch and math.min(70, math.max(42, math.floor((viewport.X - 160) / 3))) or (compact and 75 or 94)
 	hotbar.Size = UDim2.fromOffset((slotWidth + 8) * 3, 89)
 	hotbar.AnchorPoint = Vector2.new(narrowTouch and 0 or 0.5, 1)
 	hotbar.Position = UDim2.new(0.5, 0, 1, touch and -14 or -25)
@@ -611,7 +643,7 @@ for _, attribute in ipairs({ "Spectating", "Eliminated", "Activity" }) do
 	player:GetAttributeChangedSignal(attribute):Connect(function()
 		if not canAct() then releaseSprint() end
 		if attribute == "Activity" then
-			lobbyUI:SetActivity(activity())
+			if not worldMode then lobbyUI:SetActivity(activity()) end
 			if activity() == "Lobby" then
 				deadAt = nil
 				deathPanel.Visible = false
@@ -643,7 +675,7 @@ local function updateSpectatorCamera()
 	local teamId = player:GetAttribute("TeamId")
 	for _, model in ipairs(workspace:GetDescendants()) do
 		if model:IsA("Model") and model ~= character and model:GetAttribute("Combatant") == true
-			and snapshot and model:GetAttribute("MatchRound") == snapshot.Round then
+			and (worldMode or (snapshot and model:GetAttribute("MatchRound") == snapshot.Round)) then
 			local targetHumanoid = model:FindFirstChildOfClass("Humanoid")
 			if targetHumanoid and targetHumanoid.Health > 0 and model:FindFirstChild("HumanoidRootPart") then
 				local list = teamId ~= nil and model:GetAttribute("TeamId") == teamId and allied or others
@@ -795,13 +827,13 @@ RunService.Heartbeat:Connect(function(dt)
 	cameraLock:SetMenuOpen(menuOpen())
 	lockButton.Text = cameraLock.Enabled and "CAMÉRA\nVERROUILLÉE" or "CAMÉRA\nLIBRE"
 	local inLobby = activity() == "Lobby"
-	scorePanel.Visible = not inLobby
+	scorePanel.Visible = not inLobby and not worldMode
 	vitals.Visible = not inLobby
 	hotbar.Visible = not inLobby
 	attackButton.Visible = UserInputService.TouchEnabled and not inLobby
 	sprintButton.Visible = UserInputService.TouchEnabled and not inLobby
 	helpLabel.Visible = not compact and not UserInputService.TouchEnabled and not inLobby
-	feed.Visible = not inLobby and not (compact and root.AbsoluteSize.Y < 500)
+	feed.Visible = not inLobby and not worldMode and not (compact and root.AbsoluteSize.Y < 500)
 	local maxHealth = humanoid and humanoid.MaxHealth or Config.Player.MaxHealth
 	local health = humanoid and math.max(0, humanoid.Health) or 0
 	local maxStamina = character and character:GetAttribute("MaxStamina") or Config.Combat.MaxStamina
@@ -813,9 +845,21 @@ RunService.Heartbeat:Connect(function(dt)
 	staminaBar.Number.Text = string.format("%d / %d", math.floor(stamina + 0.5), maxStamina)
 	staminaBar.Fill.Size = UDim2.fromScale(math.clamp(stamina / maxStamina, 0, 1), 1)
 	staminaBar.Fill.BackgroundColor3 = stamina < Config.Combat.AttackCost and palette.Danger or palette.Gold
-	staminaBar.Title.Text = character and character:GetAttribute("Sprinting") and "ENDURANCE · COURSE" or "ENDURANCE"
+	staminaBar.Title.Text = worldMode
+		and (character and character:GetAttribute("Sprinting") and "STAMINA · SPRINTING" or "STAMINA")
+		or (character and character:GetAttribute("Sprinting") and "ENDURANCE · COURSE" or "ENDURANCE")
 	protectionLabel.Visible = not inLobby and alive() and character:GetAttribute("SpawnProtected") == true
 	local actionable = canAct()
+	if worldMode then
+		local serverNow = workspace:GetServerTimeNow()
+		local regenAt = character and character:GetAttribute("HealthRegenReadyAt")
+		healthBar.Title.Text = health < maxHealth and health > 0 and type(regenAt) == "number" and serverNow >= regenAt
+			and "HEALTH · RECOVERING" or "HEALTH"
+		local attackAt = character and character:GetAttribute("AttackReadyAt")
+		local cooldown = type(attackAt) == "number" and math.max(0, attackAt - serverNow) or 0
+		swingStatus.Visible = actionable
+		swingStatus.Text = cooldown > 0 and string.format("SWING · %.1f s", cooldown) or "SWORD READY"
+	end
 	local remainingCooldown = potionCooldown()
 	attackButton.Interactable = actionable
 	sprintButton.Interactable = actionable
@@ -834,18 +878,25 @@ RunService.Heartbeat:Connect(function(dt)
 		entry.Cooldown.Text = tostring(remainingCooldown) .. " s"
 	end
 	local team = Config.Teams[player:GetAttribute("TeamId")]
-	teamLabel.Text = inLobby and "Lobby · combats sur invitation" or (team and ("Votre équipe · " .. team.Name) or "Combat en cours")
+	teamLabel.Text = worldMode and (team and ("Kingdom · " .. team.Name) or "Choose your kingdom")
+		or (inLobby and "Lobby · combats sur invitation" or (team and ("Votre équipe · " .. team.Name) or "Combat en cours"))
 	teamLabel.TextColor3 = team and rgb(team.Color) or palette.Muted
 	local dead = humanoid ~= nil and humanoid.Health <= 0
 	if dead and not deadAt then deadAt = os.clock() end
 	local eliminated = not inLobby and (player:GetAttribute("Eliminated") == true or (deadAt ~= nil and not alive()))
 	local spectating = not inLobby and player:GetAttribute("Spectating") == true
-	deathPanel.Visible = eliminated or spectating
+	deathPanel.Visible = not worldMode and (eliminated or spectating)
 	crosshair.Visible = actionable
 	if eliminated or spectating then
-		deathTitle.Text = eliminated and "ÉLIMINÉ" or "SPECTATEUR"
-		respawnLabel.Text = (watchingName and ("Vous regardez " .. watchingName .. ".\n") or "")
-			.. "Retour au lobby à la fin du combat."
+		deathTitle.Text = eliminated and (worldMode and "FALLEN IN BATTLE" or "ÉLIMINÉ") or "SPECTATEUR"
+		if worldMode then
+			local readyAt = worldSnapshot and worldSnapshot.RespawnAt
+			local seconds = type(readyAt) == "number" and math.max(0, math.ceil(readyAt - workspace:GetServerTimeNow())) or 0
+			respawnLabel.Text = seconds > 0 and ("Returning to your kingdom in " .. seconds .. " s") or "Preparing your next life…"
+		else
+			respawnLabel.Text = (watchingName and ("Vous regardez " .. watchingName .. ".\n") or "")
+				.. "Retour au lobby à la fin du combat."
+		end
 	end
 	if snapshot and not inLobby then
 		local scores = snapshot.Scores or {}
