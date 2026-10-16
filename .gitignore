@@ -1,0 +1,6 @@
+/build/
+/.tools/
+*.rbxl.lock
+*.rbxlx.lock
+*.rbxl.autosave
+*.rbxlx.autosave

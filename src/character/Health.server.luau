@@ -1,0 +1,2 @@
+-- Intentionally replaces Roblox's default Health script.
+-- Health is restored with potions or respawning, not automatic regeneration.

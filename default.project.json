@@ -1,0 +1,27 @@
+{
+  "name": "Fer & Fioles",
+  "tree": {
+    "$className": "DataModel",
+    "ReplicatedStorage": {"MedievalShared": {"$path": "src/shared"}},
+    "ServerScriptService": {"MedievalServer": {"$path": "src/server"}},
+    "StarterPlayer": {
+      "$properties": {"EnableMouseLockOption": false},
+      "StarterPlayerScripts": {"MedievalClient": {"$path": "src/client"}},
+      "StarterCharacterScripts": {"$path": "src/character"}
+    },
+    "Workspace": {
+      "$properties": {"FilteringEnabled": true},
+      "FerEtFiolesArena": {"$path": "assets/Arena.rbxmx"}
+    },
+    "Lighting": {
+      "$properties": {
+        "ClockTime": 16.4,
+        "Brightness": 2.4,
+        "Ambient": [0.4431372549, 0.4588235294, 0.5215686275],
+        "OutdoorAmbient": [0.5372549020, 0.5607843137, 0.6117647059],
+        "GlobalShadows": true
+      }
+    },
+    "SoundService": {"$properties": {"RespectFilteringEnabled": true}}
+  }
+}

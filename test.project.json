@@ -1,0 +1,14 @@
+{
+  "name": "Fer & Fioles - tests Studio",
+  "tree": {
+    "$className": "DataModel",
+    "ReplicatedStorage": {"MedievalShared": {"$path": "src/shared"}},
+    "ServerScriptService": {
+      "MedievalServer": {
+        "$className": "Folder",
+        "CombatService": {"$path": "src/server/CombatService.luau"}
+      },
+      "StudioSmoke": {"$path": "tests/StudioSmoke.server.luau"}
+    }
+  }
+}
