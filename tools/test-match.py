@@ -20,6 +20,7 @@ modules = []
 for name, path in (
     ("Config", "src/shared/Config.luau"),
     ("MatchRules", "src/shared/MatchRules.luau"),
+    ("InvitationRules", "src/shared/InvitationRules.luau"),
     ("MatchService", "src/server/MatchService.luau"),
 ):
     source = (root / path).read_text()

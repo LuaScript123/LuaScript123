@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Export the runtime arena for Studio editing, using exactly MapBuilder.Build()."""
+"""Export the runtime arena and lobby using exactly MapBuilder.Build()."""
 import argparse
 import pathlib
 import subprocess
@@ -15,9 +15,14 @@ def main():
     args = parser.parse_args()
     stub = (root / "tools" / "map-stub.luau").read_text()
     config = (root / "src" / "shared" / "Config.luau").read_text()
+    catalog = (root / "src" / "shared" / "Catalog.luau").read_text()
     builder = (root / "src" / "server" / "MapBuilder.luau").read_text()
     source = (stub + "\nlocal configuration = (function()\n" + config
-              + "\nend)()\nlocal require = function(_) return configuration end\n"
+              + "\nend)()\nlocal catalog = (function()\n" + catalog + "\nend)()\n"
+              + 'local require = function(module)\n'
+              + '    if module.Name == "Config" then return configuration end\n'
+              + '    if module.Name == "Catalog" then return catalog end\n'
+              + '    error("Unexpected module: " .. module.Name)\nend\n'
               + "local builder = (function()\n" + builder + "\nend)()\nexport(builder.Build())\n")
     with tempfile.NamedTemporaryFile(mode="w", suffix=".luau", delete=False) as handle:
         handle.write(source)

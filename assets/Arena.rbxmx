@@ -1,4 +1,4 @@
-<!-- Geometry verified: 343 primitives; six clear spawns; central lane clear. -->
+<!-- Geometry verified: 538 primitives; six arena and eight lobby spawns clear and supported; both meeting lanes clear. -->
 <roblox version="4">
 <Item class="Model"><Properties>
 <string name="Name">FerEtFiolesArena</string>
@@ -4217,6 +4217,2390 @@
 <Vector3 name="Size"><X>3</X><Y>3</Y><Z>3</Z></Vector3>
 <token name="TopSurface">0</token>
 </Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyGround</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>0</X><Y>-2</Y><Z>300</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">880</token>
+<Vector3 name="Size"><X>164</X><Y>4</Y><Z>144</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyFoundation</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>0</X><Y>-8</Y><Z>300</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4285229406</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>172</X><Y>8</Y><Z>152</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyNorthSouthPaving</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>0</X><Y>0.04</Y><Z>300</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4289304696</Color3uint8>
+<token name="Material">912</token>
+<Vector3 name="Size"><X>25</X><Y>0.08</Y><Z>132</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyEastWestPaving</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>0</X><Y>0.05</Y><Z>300</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4289304696</Color3uint8>
+<token name="Material">912</token>
+<Vector3 name="Size"><X>154</X><Y>0.09</Y><Z>24</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyCentralMedallionBorder</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>0</X><Y>0.08</Y><Z>300</Z><R00>6.123234e-17</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>6.123234e-17</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4285229406</Color3uint8>
+<token name="Material">800</token>
+<token name="Shape">2</token>
+<Vector3 name="Size"><X>0.1</X><Y>50</Y><Z>50</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyCentralMedallion</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>0</X><Y>0.14</Y><Z>300</Z><R00>6.123234e-17</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>6.123234e-17</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">912</token>
+<token name="Shape">2</token>
+<Vector3 name="Size"><X>0.1</X><Y>47</Y><Z>47</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyCompassInlay</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>0</X><Y>0.23</Y><Z>300</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4293639003</Color3uint8>
+<token name="Material">1088</token>
+<Vector3 name="Size"><X>1</X><Y>0.08</Y><Z>39</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyCompassInlay</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>0</X><Y>0.23</Y><Z>300</Z><R00>0.70710678</R00><R01>0</R01><R02>0.70710678</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>-0.70710678</R20><R21>0</R21><R22>0.70710678</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4293639003</Color3uint8>
+<token name="Material">1088</token>
+<Vector3 name="Size"><X>1</X><Y>0.08</Y><Z>39</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyCompassInlay</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>0</X><Y>0.23</Y><Z>300</Z><R00>6.123234e-17</R00><R01>0</R01><R02>1</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>-1</R20><R21>0</R21><R22>6.123234e-17</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4293639003</Color3uint8>
+<token name="Material">1088</token>
+<Vector3 name="Size"><X>1</X><Y>0.08</Y><Z>39</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyCompassInlay</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>0</X><Y>0.23</Y><Z>300</Z><R00>-0.70710678</R00><R01>0</R01><R02>0.70710678</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>-0.70710678</R20><R21>0</R21><R22>-0.70710678</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4293639003</Color3uint8>
+<token name="Material">1088</token>
+<Vector3 name="Size"><X>1</X><Y>0.08</Y><Z>39</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyBoundarySide</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-81</X><Y>9</Y><Z>300</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4288385660</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>3</X><Y>18</Y><Z>144</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyBoundaryEnd</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>0</X><Y>9</Y><Z>229</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4288385660</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>160</X><Y>18</Y><Z>3</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyWallCoping</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-81</X><Y>18.5</Y><Z>300</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4285229406</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>4</X><Y>1</Y><Z>144</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyWallCoping</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>0</X><Y>18.5</Y><Z>229</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4285229406</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>160</X><Y>1</Y><Z>4</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyEndBattlement</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-72</X><Y>20.5</Y><Z>229</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>4</X><Y>3</Y><Z>3</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyEndBattlement</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-60</X><Y>20.5</Y><Z>229</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>4</X><Y>3</Y><Z>3</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyEndBattlement</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-48</X><Y>20.5</Y><Z>229</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>4</X><Y>3</Y><Z>3</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyEndBattlement</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-36</X><Y>20.5</Y><Z>229</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>4</X><Y>3</Y><Z>3</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyEndBattlement</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-24</X><Y>20.5</Y><Z>229</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>4</X><Y>3</Y><Z>3</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyEndBattlement</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-12</X><Y>20.5</Y><Z>229</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>4</X><Y>3</Y><Z>3</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyEndBattlement</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>0</X><Y>20.5</Y><Z>229</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>4</X><Y>3</Y><Z>3</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyEndBattlement</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>12</X><Y>20.5</Y><Z>229</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>4</X><Y>3</Y><Z>3</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyEndBattlement</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>24</X><Y>20.5</Y><Z>229</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>4</X><Y>3</Y><Z>3</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyEndBattlement</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>36</X><Y>20.5</Y><Z>229</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>4</X><Y>3</Y><Z>3</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyEndBattlement</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>48</X><Y>20.5</Y><Z>229</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>4</X><Y>3</Y><Z>3</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyEndBattlement</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>60</X><Y>20.5</Y><Z>229</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>4</X><Y>3</Y><Z>3</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyEndBattlement</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>72</X><Y>20.5</Y><Z>229</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>4</X><Y>3</Y><Z>3</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbySideBattlement</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-81</X><Y>20.5</Y><Z>240</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>3</X><Y>3</Y><Z>4</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbySideBattlement</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-81</X><Y>20.5</Y><Z>252</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>3</X><Y>3</Y><Z>4</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbySideBattlement</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-81</X><Y>20.5</Y><Z>264</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>3</X><Y>3</Y><Z>4</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbySideBattlement</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-81</X><Y>20.5</Y><Z>276</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>3</X><Y>3</Y><Z>4</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbySideBattlement</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-81</X><Y>20.5</Y><Z>288</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>3</X><Y>3</Y><Z>4</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbySideBattlement</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-81</X><Y>20.5</Y><Z>300</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>3</X><Y>3</Y><Z>4</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbySideBattlement</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-81</X><Y>20.5</Y><Z>312</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>3</X><Y>3</Y><Z>4</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbySideBattlement</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-81</X><Y>20.5</Y><Z>324</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>3</X><Y>3</Y><Z>4</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbySideBattlement</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-81</X><Y>20.5</Y><Z>336</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>3</X><Y>3</Y><Z>4</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbySideBattlement</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-81</X><Y>20.5</Y><Z>348</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>3</X><Y>3</Y><Z>4</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbySideBattlement</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-81</X><Y>20.5</Y><Z>360</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>3</X><Y>3</Y><Z>4</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyCornerKeep</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-76</X><Y>12</Y><Z>233</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4285229406</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>10</X><Y>24</Y><Z>10</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyCornerCrown</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-76</X><Y>24.75</Y><Z>233</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>12</X><Y>1.5</Y><Z>12</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyKeepMerlon</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-80</X><Y>27</Y><Z>229</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>3</X><Y>3</Y><Z>3</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyKeepMerlon</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-80</X><Y>27</Y><Z>237</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>3</X><Y>3</Y><Z>3</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyKeepMerlon</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-72</X><Y>27</Y><Z>229</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>3</X><Y>3</Y><Z>3</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyKeepMerlon</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-72</X><Y>27</Y><Z>237</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>3</X><Y>3</Y><Z>3</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyCornerKeep</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-76</X><Y>12</Y><Z>367</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4285229406</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>10</X><Y>24</Y><Z>10</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyCornerCrown</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-76</X><Y>24.75</Y><Z>367</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>12</X><Y>1.5</Y><Z>12</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyKeepMerlon</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-80</X><Y>27</Y><Z>363</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>3</X><Y>3</Y><Z>3</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyKeepMerlon</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-80</X><Y>27</Y><Z>371</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>3</X><Y>3</Y><Z>3</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyKeepMerlon</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-72</X><Y>27</Y><Z>363</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>3</X><Y>3</Y><Z>3</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyKeepMerlon</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-72</X><Y>27</Y><Z>371</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>3</X><Y>3</Y><Z>3</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyBoundarySide</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>81</X><Y>9</Y><Z>300</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4288385660</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>3</X><Y>18</Y><Z>144</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyBoundaryEnd</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>0</X><Y>9</Y><Z>371</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4288385660</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>160</X><Y>18</Y><Z>3</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyWallCoping</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>81</X><Y>18.5</Y><Z>300</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4285229406</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>4</X><Y>1</Y><Z>144</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyWallCoping</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>0</X><Y>18.5</Y><Z>371</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4285229406</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>160</X><Y>1</Y><Z>4</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyEndBattlement</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-72</X><Y>20.5</Y><Z>371</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>4</X><Y>3</Y><Z>3</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyEndBattlement</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-60</X><Y>20.5</Y><Z>371</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>4</X><Y>3</Y><Z>3</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyEndBattlement</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-48</X><Y>20.5</Y><Z>371</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>4</X><Y>3</Y><Z>3</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyEndBattlement</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-36</X><Y>20.5</Y><Z>371</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>4</X><Y>3</Y><Z>3</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyEndBattlement</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-24</X><Y>20.5</Y><Z>371</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>4</X><Y>3</Y><Z>3</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyEndBattlement</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-12</X><Y>20.5</Y><Z>371</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>4</X><Y>3</Y><Z>3</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyEndBattlement</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>0</X><Y>20.5</Y><Z>371</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>4</X><Y>3</Y><Z>3</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyEndBattlement</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>12</X><Y>20.5</Y><Z>371</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>4</X><Y>3</Y><Z>3</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyEndBattlement</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>24</X><Y>20.5</Y><Z>371</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>4</X><Y>3</Y><Z>3</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyEndBattlement</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>36</X><Y>20.5</Y><Z>371</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>4</X><Y>3</Y><Z>3</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyEndBattlement</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>48</X><Y>20.5</Y><Z>371</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>4</X><Y>3</Y><Z>3</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyEndBattlement</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>60</X><Y>20.5</Y><Z>371</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>4</X><Y>3</Y><Z>3</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyEndBattlement</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>72</X><Y>20.5</Y><Z>371</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>4</X><Y>3</Y><Z>3</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbySideBattlement</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>81</X><Y>20.5</Y><Z>240</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>3</X><Y>3</Y><Z>4</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbySideBattlement</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>81</X><Y>20.5</Y><Z>252</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>3</X><Y>3</Y><Z>4</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbySideBattlement</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>81</X><Y>20.5</Y><Z>264</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>3</X><Y>3</Y><Z>4</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbySideBattlement</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>81</X><Y>20.5</Y><Z>276</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>3</X><Y>3</Y><Z>4</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbySideBattlement</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>81</X><Y>20.5</Y><Z>288</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>3</X><Y>3</Y><Z>4</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbySideBattlement</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>81</X><Y>20.5</Y><Z>300</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>3</X><Y>3</Y><Z>4</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbySideBattlement</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>81</X><Y>20.5</Y><Z>312</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>3</X><Y>3</Y><Z>4</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbySideBattlement</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>81</X><Y>20.5</Y><Z>324</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>3</X><Y>3</Y><Z>4</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbySideBattlement</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>81</X><Y>20.5</Y><Z>336</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>3</X><Y>3</Y><Z>4</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbySideBattlement</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>81</X><Y>20.5</Y><Z>348</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>3</X><Y>3</Y><Z>4</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbySideBattlement</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>81</X><Y>20.5</Y><Z>360</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>3</X><Y>3</Y><Z>4</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyCornerKeep</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>76</X><Y>12</Y><Z>233</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4285229406</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>10</X><Y>24</Y><Z>10</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyCornerCrown</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>76</X><Y>24.75</Y><Z>233</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>12</X><Y>1.5</Y><Z>12</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyKeepMerlon</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>72</X><Y>27</Y><Z>229</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>3</X><Y>3</Y><Z>3</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyKeepMerlon</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>72</X><Y>27</Y><Z>237</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>3</X><Y>3</Y><Z>3</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyKeepMerlon</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>80</X><Y>27</Y><Z>229</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>3</X><Y>3</Y><Z>3</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyKeepMerlon</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>80</X><Y>27</Y><Z>237</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>3</X><Y>3</Y><Z>3</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyCornerKeep</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>76</X><Y>12</Y><Z>367</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4285229406</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>10</X><Y>24</Y><Z>10</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyCornerCrown</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>76</X><Y>24.75</Y><Z>367</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>12</X><Y>1.5</Y><Z>12</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyKeepMerlon</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>72</X><Y>27</Y><Z>363</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>3</X><Y>3</Y><Z>3</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyKeepMerlon</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>72</X><Y>27</Y><Z>371</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>3</X><Y>3</Y><Z>3</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyKeepMerlon</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>80</X><Y>27</Y><Z>363</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>3</X><Y>3</Y><Z>3</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyKeepMerlon</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>80</X><Y>27</Y><Z>371</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>3</X><Y>3</Y><Z>3</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbySealedGate</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>0</X><Y>7.5</Y><Z>230.8</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4284432683</Color3uint8>
+<token name="Material">528</token>
+<Vector3 name="Size"><X>18</X><Y>15</Y><Z>0.5</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyGateColumn</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-10.5</X><Y>9</Y><Z>231</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>3</X><Y>18</Y><Z>4</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyGateColumn</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>10.5</X><Y>9</Y><Z>231</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>3</X><Y>18</Y><Z>4</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyGateLintel</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>0</X><Y>17</Y><Z>231</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>24</X><Y>3</Y><Z>4</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyGateIronwork</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-5</X><Y>7.5</Y><Z>231.15</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4285229406</Color3uint8>
+<token name="Material">1088</token>
+<Vector3 name="Size"><X>0.6</X><Y>14</Y><Z>0.2</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyGateIronwork</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>0</X><Y>7.5</Y><Z>231.15</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4285229406</Color3uint8>
+<token name="Material">1088</token>
+<Vector3 name="Size"><X>0.6</X><Y>14</Y><Z>0.2</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyGateIronwork</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>5</X><Y>7.5</Y><Z>231.15</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4285229406</Color3uint8>
+<token name="Material">1088</token>
+<Vector3 name="Size"><X>0.6</X><Y>14</Y><Z>0.2</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyRedcliffMedallion</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-54</X><Y>0.12</Y><Z>262</Z><R00>6.123234e-17</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>6.123234e-17</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4290262319</Color3uint8>
+<token name="Material">912</token>
+<token name="Shape">2</token>
+<Vector3 name="Size"><X>0.12</X><Y>24</Y><Z>24</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyRedcliffCanopy</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-54</X><Y>14</Y><Z>262</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290262319</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>27</X><Y>1</Y><Z>25</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyRedcliffCanopyTrim</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-54</X><Y>13.3</Y><Z>262</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4292719708</Color3uint8>
+<token name="Material">1088</token>
+<Vector3 name="Size"><X>28</X><Y>0.4</Y><Z>26</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyRedcliffColumn</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-65</X><Y>6.5</Y><Z>252</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>1.5</X><Y>13</Y><Z>1.5</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyRedcliffColumn</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-65</X><Y>6.5</Y><Z>272</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>1.5</X><Y>13</Y><Z>1.5</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyRedcliffColumn</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-43</X><Y>6.5</Y><Z>252</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>1.5</X><Y>13</Y><Z>1.5</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyRedcliffColumn</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-43</X><Y>6.5</Y><Z>272</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>1.5</X><Y>13</Y><Z>1.5</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyRedcliffBannerPole</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-63</X><Y>6</Y><Z>262</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4284432683</Color3uint8>
+<token name="Material">512</token>
+<Vector3 name="Size"><X>0.4</X><Y>12</Y><Z>0.4</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyRedcliffBanner</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-63</X><Y>8.5</Y><Z>262</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4290262319</Color3uint8>
+<token name="Material">1312</token>
+<Vector3 name="Size"><X>0.2</X><Y>7</Y><Z>7</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyRedcliffBannerStripe</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-63</X><Y>5.5</Y><Z>262</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4292719708</Color3uint8>
+<token name="Material">1088</token>
+<Vector3 name="Size"><X>0.3</X><Y>0.6</Y><Z>7.2</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyRedcliffCross</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-63.2</X><Y>9</Y><Z>262</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4292719708</Color3uint8>
+<token name="Material">1088</token>
+<Vector3 name="Size"><X>0.2</X><Y>3.8</Y><Z>0.7</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyRedcliffCrossArms</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-63.2</X><Y>9</Y><Z>262</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4292719708</Color3uint8>
+<token name="Material">1088</token>
+<Vector3 name="Size"><X>0.2</X><Y>0.7</Y><Z>3</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyKorbloxMedallion</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>54</X><Y>0.12</Y><Z>262</Z><R00>6.123234e-17</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>6.123234e-17</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4281756055</Color3uint8>
+<token name="Material">912</token>
+<token name="Shape">2</token>
+<Vector3 name="Size"><X>0.12</X><Y>24</Y><Z>24</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyKorbloxCanopy</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>54</X><Y>14</Y><Z>262</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4281756055</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>27</X><Y>1</Y><Z>25</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyKorbloxCanopyTrim</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>54</X><Y>13.3</Y><Z>262</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4286174446</Color3uint8>
+<token name="Material">1088</token>
+<Vector3 name="Size"><X>28</X><Y>0.4</Y><Z>26</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyKorbloxColumn</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>43</X><Y>6.5</Y><Z>252</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>1.5</X><Y>13</Y><Z>1.5</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyKorbloxColumn</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>43</X><Y>6.5</Y><Z>272</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>1.5</X><Y>13</Y><Z>1.5</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyKorbloxColumn</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>65</X><Y>6.5</Y><Z>252</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>1.5</X><Y>13</Y><Z>1.5</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyKorbloxColumn</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>65</X><Y>6.5</Y><Z>272</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>1.5</X><Y>13</Y><Z>1.5</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyKorbloxBannerPole</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>63</X><Y>6</Y><Z>262</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4284432683</Color3uint8>
+<token name="Material">512</token>
+<Vector3 name="Size"><X>0.4</X><Y>12</Y><Z>0.4</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyKorbloxBanner</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>63</X><Y>8.5</Y><Z>262</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4281756055</Color3uint8>
+<token name="Material">1312</token>
+<Vector3 name="Size"><X>0.2</X><Y>7</Y><Z>7</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyKorbloxBannerStripe</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>63</X><Y>5.5</Y><Z>262</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4286174446</Color3uint8>
+<token name="Material">1088</token>
+<Vector3 name="Size"><X>0.3</X><Y>0.6</Y><Z>7.2</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyKorbloxFang</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>63.2</X><Y>9</Y><Z>261</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>0.95533649</R11><R12>0.29552021</R12><R20>0</R20><R21>-0.29552021</R21><R22>0.95533649</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4286174446</Color3uint8>
+<token name="Material">1088</token>
+<Vector3 name="Size"><X>0.3</X><Y>3.5</Y><Z>0.7</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyKorbloxFang</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>63.2</X><Y>9</Y><Z>263</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>0.95533649</R11><R12>-0.29552021</R12><R20>0</R20><R21>0.29552021</R21><R22>0.95533649</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4286174446</Color3uint8>
+<token name="Material">1088</token>
+<Vector3 name="Size"><X>0.3</X><Y>3.5</Y><Z>0.7</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyGreywolfMedallion</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-54</X><Y>0.12</Y><Z>338</Z><R00>6.123234e-17</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>6.123234e-17</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4285231742</Color3uint8>
+<token name="Material">912</token>
+<token name="Shape">2</token>
+<Vector3 name="Size"><X>0.12</X><Y>24</Y><Z>24</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyGreywolfCanopy</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-54</X><Y>14</Y><Z>338</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4285231742</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>27</X><Y>1</Y><Z>25</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyGreywolfCanopyTrim</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-54</X><Y>13.3</Y><Z>338</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4292533473</Color3uint8>
+<token name="Material">1088</token>
+<Vector3 name="Size"><X>28</X><Y>0.4</Y><Z>26</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyGreywolfColumn</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-65</X><Y>6.5</Y><Z>328</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>1.5</X><Y>13</Y><Z>1.5</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyGreywolfColumn</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-65</X><Y>6.5</Y><Z>348</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>1.5</X><Y>13</Y><Z>1.5</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyGreywolfColumn</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-43</X><Y>6.5</Y><Z>328</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>1.5</X><Y>13</Y><Z>1.5</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyGreywolfColumn</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-43</X><Y>6.5</Y><Z>348</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>1.5</X><Y>13</Y><Z>1.5</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyGreywolfBannerPole</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-63</X><Y>6</Y><Z>338</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4284432683</Color3uint8>
+<token name="Material">512</token>
+<Vector3 name="Size"><X>0.4</X><Y>12</Y><Z>0.4</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyGreywolfBanner</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-63</X><Y>8.5</Y><Z>338</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4285231742</Color3uint8>
+<token name="Material">1312</token>
+<Vector3 name="Size"><X>0.2</X><Y>7</Y><Z>7</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyGreywolfBannerStripe</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-63</X><Y>5.5</Y><Z>338</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4292533473</Color3uint8>
+<token name="Material">1088</token>
+<Vector3 name="Size"><X>0.3</X><Y>0.6</Y><Z>7.2</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyGreywolfDiamond</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-63.2</X><Y>9</Y><Z>338</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>0.70710678</R11><R12>-0.70710678</R12><R20>0</R20><R21>0.70710678</R21><R22>0.70710678</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4292533473</Color3uint8>
+<token name="Material">1088</token>
+<Vector3 name="Size"><X>0.3</X><Y>2.6</Y><Z>2.6</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyOverseerMedallion</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>54</X><Y>0.12</Y><Z>338</Z><R00>6.123234e-17</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>6.123234e-17</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4281756993</Color3uint8>
+<token name="Material">912</token>
+<token name="Shape">2</token>
+<Vector3 name="Size"><X>0.12</X><Y>24</Y><Z>24</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyOverseerCanopy</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>54</X><Y>14</Y><Z>338</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4281756993</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>27</X><Y>1</Y><Z>25</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyOverseerCanopyTrim</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>54</X><Y>13.3</Y><Z>338</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4288142675</Color3uint8>
+<token name="Material">1088</token>
+<Vector3 name="Size"><X>28</X><Y>0.4</Y><Z>26</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyOverseerColumn</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>43</X><Y>6.5</Y><Z>328</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>1.5</X><Y>13</Y><Z>1.5</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyOverseerColumn</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>43</X><Y>6.5</Y><Z>348</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>1.5</X><Y>13</Y><Z>1.5</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyOverseerColumn</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>65</X><Y>6.5</Y><Z>328</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>1.5</X><Y>13</Y><Z>1.5</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyOverseerColumn</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>65</X><Y>6.5</Y><Z>348</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>1.5</X><Y>13</Y><Z>1.5</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyOverseerBannerPole</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>63</X><Y>6</Y><Z>338</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4284432683</Color3uint8>
+<token name="Material">512</token>
+<Vector3 name="Size"><X>0.4</X><Y>12</Y><Z>0.4</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyOverseerBanner</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>63</X><Y>8.5</Y><Z>338</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4281756993</Color3uint8>
+<token name="Material">1312</token>
+<Vector3 name="Size"><X>0.2</X><Y>7</Y><Z>7</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyOverseerBannerStripe</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>63</X><Y>5.5</Y><Z>338</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4288142675</Color3uint8>
+<token name="Material">1088</token>
+<Vector3 name="Size"><X>0.3</X><Y>0.6</Y><Z>7.2</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyOverseerEye</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>63.2</X><Y>9</Y><Z>338</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4288142675</Color3uint8>
+<token name="Material">288</token>
+<token name="Shape">0</token>
+<Vector3 name="Size"><X>0.4</X><Y>2.2</Y><Z>3.8</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyOverseerPupil</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>63.2</X><Y>9</Y><Z>338</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4285229406</Color3uint8>
+<token name="Material">1088</token>
+<Vector3 name="Size"><X>0.5</X><Y>1.6</Y><Z>0.8</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbySwordShopCounter</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>0</X><Y>1.5</Y><Z>353</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4284432683</Color3uint8>
+<token name="Material">528</token>
+<Vector3 name="Size"><X>42</X><Y>3</Y><Z>5</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbySwordShopCanopy</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>0</X><Y>14</Y><Z>357</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4285613113</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>47</X><Y>1.2</Y><Z>20</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbySwordShopPost</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-22</X><Y>6.75</Y><Z>350</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4284432683</Color3uint8>
+<token name="Material">512</token>
+<Vector3 name="Size"><X>1.5</X><Y>13.5</Y><Z>1.5</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbySwordShopPost</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-22</X><Y>6.75</Y><Z>364</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4284432683</Color3uint8>
+<token name="Material">512</token>
+<Vector3 name="Size"><X>1.5</X><Y>13.5</Y><Z>1.5</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbySwordShopPost</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>22</X><Y>6.75</Y><Z>350</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4284432683</Color3uint8>
+<token name="Material">512</token>
+<Vector3 name="Size"><X>1.5</X><Y>13.5</Y><Z>1.5</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbySwordShopPost</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>22</X><Y>6.75</Y><Z>364</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4284432683</Color3uint8>
+<token name="Material">512</token>
+<Vector3 name="Size"><X>1.5</X><Y>13.5</Y><Z>1.5</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbySwordIronPlinth</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-15</X><Y>3.25</Y><Z>353</Z><R00>6.123234e-17</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>6.123234e-17</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4285229406</Color3uint8>
+<token name="Material">800</token>
+<token name="Shape">2</token>
+<Vector3 name="Size"><X>0.4</X><Y>5</Y><Z>5</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbySwordIronGrip</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-15</X><Y>4.1</Y><Z>353</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4284236588</Color3uint8>
+<token name="Material">512</token>
+<Vector3 name="Size"><X>0.35</X><Y>1.3</Y><Z>0.4</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbySwordIronGuard</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-15</X><Y>4.8</Y><Z>353</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4291930969</Color3uint8>
+<token name="Material">1088</token>
+<Vector3 name="Size"><X>2.3</X><Y>0.35</Y><Z>0.5</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbySwordIronBlade</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-15</X><Y>6.95</Y><Z>353</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4291418597</Color3uint8>
+<token name="Material">1088</token>
+<Vector3 name="Size"><X>0.75</X><Y>4</Y><Z>0.2</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbySwordIronTip</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-15</X><Y>9</Y><Z>353</Z><R00>0.70710678</R00><R01>-0.70710678</R01><R02>0</R02><R10>0.70710678</R10><R11>0.70710678</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4291418597</Color3uint8>
+<token name="Material">1088</token>
+<Vector3 name="Size"><X>0.55</X><Y>0.55</Y><Z>0.2</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbySwordRedcliffPlinth</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-7.5</X><Y>3.25</Y><Z>353</Z><R00>6.123234e-17</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>6.123234e-17</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4285229406</Color3uint8>
+<token name="Material">800</token>
+<token name="Shape">2</token>
+<Vector3 name="Size"><X>0.4</X><Y>5</Y><Z>5</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbySwordRedcliffGrip</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-7.5</X><Y>4.1</Y><Z>353</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4293835098</Color3uint8>
+<token name="Material">512</token>
+<Vector3 name="Size"><X>0.35</X><Y>1.3</Y><Z>0.4</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbySwordRedcliffGuard</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-7.5</X><Y>4.8</Y><Z>353</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4290983731</Color3uint8>
+<token name="Material">1088</token>
+<Vector3 name="Size"><X>2.3</X><Y>0.35</Y><Z>0.5</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbySwordRedcliffBlade</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-7.5</X><Y>6.95</Y><Z>353</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4292924615</Color3uint8>
+<token name="Material">1088</token>
+<Vector3 name="Size"><X>0.75</X><Y>4</Y><Z>0.2</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbySwordRedcliffTip</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-7.5</X><Y>9</Y><Z>353</Z><R00>0.70710678</R00><R01>-0.70710678</R01><R02>0</R02><R10>0.70710678</R10><R11>0.70710678</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4292924615</Color3uint8>
+<token name="Material">1088</token>
+<Vector3 name="Size"><X>0.55</X><Y>0.55</Y><Z>0.2</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbySwordKorbloxPlinth</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>0</X><Y>3.25</Y><Z>353</Z><R00>6.123234e-17</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>6.123234e-17</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4285229406</Color3uint8>
+<token name="Material">800</token>
+<token name="Shape">2</token>
+<Vector3 name="Size"><X>0.4</X><Y>5</Y><Z>5</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbySwordKorbloxGrip</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>0</X><Y>4.1</Y><Z>353</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4283210464</Color3uint8>
+<token name="Material">512</token>
+<Vector3 name="Size"><X>0.35</X><Y>1.3</Y><Z>0.4</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbySwordKorbloxGuard</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>0</X><Y>4.8</Y><Z>353</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4281020741</Color3uint8>
+<token name="Material">1088</token>
+<Vector3 name="Size"><X>2.3</X><Y>0.35</Y><Z>0.5</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbySwordKorbloxBlade</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>0</X><Y>6.95</Y><Z>353</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4286500586</Color3uint8>
+<token name="Material">1088</token>
+<Vector3 name="Size"><X>0.75</X><Y>4</Y><Z>0.2</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbySwordKorbloxTip</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>0</X><Y>9</Y><Z>353</Z><R00>0.70710678</R00><R01>-0.70710678</R01><R02>0</R02><R10>0.70710678</R10><R11>0.70710678</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4286500586</Color3uint8>
+<token name="Material">1088</token>
+<Vector3 name="Size"><X>0.55</X><Y>0.55</Y><Z>0.2</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbySwordGreywolfPlinth</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>7.5</X><Y>3.25</Y><Z>353</Z><R00>6.123234e-17</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>6.123234e-17</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4285229406</Color3uint8>
+<token name="Material">800</token>
+<token name="Shape">2</token>
+<Vector3 name="Size"><X>0.4</X><Y>5</Y><Z>5</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbySwordGreywolfGrip</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>7.5</X><Y>4.1</Y><Z>353</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4293584856</Color3uint8>
+<token name="Material">512</token>
+<Vector3 name="Size"><X>0.35</X><Y>1.3</Y><Z>0.4</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbySwordGreywolfGuard</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>7.5</X><Y>4.8</Y><Z>353</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4284310644</Color3uint8>
+<token name="Material">1088</token>
+<Vector3 name="Size"><X>2.3</X><Y>0.35</Y><Z>0.5</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbySwordGreywolfBlade</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>7.5</X><Y>6.95</Y><Z>353</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4291415510</Color3uint8>
+<token name="Material">1088</token>
+<Vector3 name="Size"><X>0.75</X><Y>4</Y><Z>0.2</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbySwordGreywolfTip</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>7.5</X><Y>9</Y><Z>353</Z><R00>0.70710678</R00><R01>-0.70710678</R01><R02>0</R02><R10>0.70710678</R10><R11>0.70710678</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4291415510</Color3uint8>
+<token name="Material">1088</token>
+<Vector3 name="Size"><X>0.55</X><Y>0.55</Y><Z>0.2</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbySwordOverseerPlinth</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>15</X><Y>3.25</Y><Z>353</Z><R00>6.123234e-17</R00><R01>-1</R01><R02>0</R02><R10>1</R10><R11>6.123234e-17</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4285229406</Color3uint8>
+<token name="Material">800</token>
+<token name="Shape">2</token>
+<Vector3 name="Size"><X>0.4</X><Y>5</Y><Z>5</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbySwordOverseerGrip</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>15</X><Y>4.1</Y><Z>353</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4289524056</Color3uint8>
+<token name="Material">512</token>
+<Vector3 name="Size"><X>0.35</X><Y>1.3</Y><Z>0.4</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbySwordOverseerGuard</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>15</X><Y>4.8</Y><Z>353</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4281356600</Color3uint8>
+<token name="Material">1088</token>
+<Vector3 name="Size"><X>2.3</X><Y>0.35</Y><Z>0.5</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbySwordOverseerBlade</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>15</X><Y>6.95</Y><Z>353</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4287747703</Color3uint8>
+<token name="Material">1088</token>
+<Vector3 name="Size"><X>0.75</X><Y>4</Y><Z>0.2</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbySwordOverseerTip</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>15</X><Y>9</Y><Z>353</Z><R00>0.70710678</R00><R01>-0.70710678</R01><R02>0</R02><R10>0.70710678</R10><R11>0.70710678</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4287747703</Color3uint8>
+<token name="Material">1088</token>
+<Vector3 name="Size"><X>0.55</X><Y>0.55</Y><Z>0.2</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyStoneSeat</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-31</X><Y>1</Y><Z>244</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4285229406</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>10</X><Y>2</Y><Z>3</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbySeatTrim</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-31</X><Y>2.15</Y><Z>244</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>10.5</X><Y>0.3</Y><Z>3.5</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyStoneSeat</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-31</X><Y>1</Y><Z>356</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4285229406</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>10</X><Y>2</Y><Z>3</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbySeatTrim</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-31</X><Y>2.15</Y><Z>356</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>10.5</X><Y>0.3</Y><Z>3.5</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyStoneSeat</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>31</X><Y>1</Y><Z>244</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4285229406</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>10</X><Y>2</Y><Z>3</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbySeatTrim</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>31</X><Y>2.15</Y><Z>244</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>10.5</X><Y>0.3</Y><Z>3.5</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyStoneSeat</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>31</X><Y>1</Y><Z>356</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4285229406</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>10</X><Y>2</Y><Z>3</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbySeatTrim</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>31</X><Y>2.15</Y><Z>356</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">true</bool>
+<Color3uint8 name="Color3uint8">4290622359</Color3uint8>
+<token name="Material">800</token>
+<Vector3 name="Size"><X>10.5</X><Y>0.3</Y><Z>3.5</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyLampPost</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-31</X><Y>5</Y><Z>276</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4284432683</Color3uint8>
+<token name="Material">512</token>
+<Vector3 name="Size"><X>0.6</X><Y>10</Y><Z>0.6</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LanternFrame</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-31</X><Y>10.5</Y><Z>276</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4284432683</Color3uint8>
+<token name="Material">512</token>
+<Vector3 name="Size"><X>1.4</X><Y>2.2</Y><Z>1.4</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LanternGlow</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-31</X><Y>10.5</Y><Z>276</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4294954869</Color3uint8>
+<token name="Material">288</token>
+<Vector3 name="Size"><X>1</X><Y>1.5</Y><Z>1</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+<Item class="PointLight"><Properties>
+<string name="Name">PointLight</string>
+<float name="Brightness">1.4</float>
+<Color3 name="Color"><R>1</R><G>0.82745098</G><B>0.56862745</B></Color3>
+<float name="Range">22</float>
+<bool name="Shadows">true</bool>
+</Properties>
+</Item>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyLampPost</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-31</X><Y>5</Y><Z>324</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4284432683</Color3uint8>
+<token name="Material">512</token>
+<Vector3 name="Size"><X>0.6</X><Y>10</Y><Z>0.6</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LanternFrame</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-31</X><Y>10.5</Y><Z>324</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4284432683</Color3uint8>
+<token name="Material">512</token>
+<Vector3 name="Size"><X>1.4</X><Y>2.2</Y><Z>1.4</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LanternGlow</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>-31</X><Y>10.5</Y><Z>324</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4294954869</Color3uint8>
+<token name="Material">288</token>
+<Vector3 name="Size"><X>1</X><Y>1.5</Y><Z>1</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+<Item class="PointLight"><Properties>
+<string name="Name">PointLight</string>
+<float name="Brightness">1.4</float>
+<Color3 name="Color"><R>1</R><G>0.82745098</G><B>0.56862745</B></Color3>
+<float name="Range">22</float>
+<bool name="Shadows">true</bool>
+</Properties>
+</Item>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyLampPost</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>31</X><Y>5</Y><Z>276</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4284432683</Color3uint8>
+<token name="Material">512</token>
+<Vector3 name="Size"><X>0.6</X><Y>10</Y><Z>0.6</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LanternFrame</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>31</X><Y>10.5</Y><Z>276</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4284432683</Color3uint8>
+<token name="Material">512</token>
+<Vector3 name="Size"><X>1.4</X><Y>2.2</Y><Z>1.4</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LanternGlow</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>31</X><Y>10.5</Y><Z>276</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4294954869</Color3uint8>
+<token name="Material">288</token>
+<Vector3 name="Size"><X>1</X><Y>1.5</Y><Z>1</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+<Item class="PointLight"><Properties>
+<string name="Name">PointLight</string>
+<float name="Brightness">1.4</float>
+<Color3 name="Color"><R>1</R><G>0.82745098</G><B>0.56862745</B></Color3>
+<float name="Range">22</float>
+<bool name="Shadows">true</bool>
+</Properties>
+</Item>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LobbyLampPost</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>31</X><Y>5</Y><Z>324</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4284432683</Color3uint8>
+<token name="Material">512</token>
+<Vector3 name="Size"><X>0.6</X><Y>10</Y><Z>0.6</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LanternFrame</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>31</X><Y>10.5</Y><Z>324</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4284432683</Color3uint8>
+<token name="Material">512</token>
+<Vector3 name="Size"><X>1.4</X><Y>2.2</Y><Z>1.4</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+</Item>
+<Item class="Part"><Properties>
+<string name="Name">LanternGlow</string>
+<bool name="Anchored">true</bool>
+<token name="BottomSurface">0</token>
+<CoordinateFrame name="CFrame"><X>31</X><Y>10.5</Y><Z>324</Z><R00>1</R00><R01>0</R01><R02>0</R02><R10>0</R10><R11>1</R11><R12>0</R12><R20>0</R20><R21>0</R21><R22>1</R22></CoordinateFrame>
+<bool name="CanCollide">false</bool>
+<Color3uint8 name="Color3uint8">4294954869</Color3uint8>
+<token name="Material">288</token>
+<Vector3 name="Size"><X>1</X><Y>1.5</Y><Z>1</Z></Vector3>
+<token name="TopSurface">0</token>
+</Properties>
+<Item class="PointLight"><Properties>
+<string name="Name">PointLight</string>
+<float name="Brightness">1.4</float>
+<Color3 name="Color"><R>1</R><G>0.82745098</G><B>0.56862745</B></Color3>
+<float name="Range">22</float>
+<bool name="Shadows">true</bool>
+</Properties>
+</Item>
 </Item>
 </Item>
 </roblox>

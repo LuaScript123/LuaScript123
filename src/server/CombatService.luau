@@ -3,6 +3,7 @@ local TweenService = game:GetService("TweenService")
 local Workspace = game:GetService("Workspace")
 local Shared = ReplicatedStorage:WaitForChild("MedievalShared")
 local Config = require(Shared:WaitForChild("Config"))
+local Catalog = require(Shared:WaitForChild("Catalog"))
 local Rules = require(Shared:WaitForChild("CombatRules"))
 
 local CombatService = {}
@@ -50,30 +51,91 @@ local function swordPart(model, name, size, color, material)
     return part
 end
 
-local function buildSword(model)
+local function weldTo(part, anchor, frame)
+    part.CFrame = anchor.CFrame * frame
+    local weld = Instance.new("WeldConstraint")
+    weld.Part0 = anchor
+    weld.Part1 = part
+    weld.Parent = part
+    return part
+end
+
+local function selectedAppearance(subject)
+    local swordId = Catalog.DefaultSword
+    local factionId = Catalog.DefaultFaction
+    if isPlayer(subject) then
+        local equipped = subject:GetAttribute("EquippedSword")
+        local faction = subject:GetAttribute("FactionId")
+        if type(equipped) == "string" and Catalog.Swords[equipped] then
+            swordId = equipped
+        end
+        if type(faction) == "string" and Catalog.Factions[faction] then
+            factionId = faction
+        end
+    end
+    return swordId, factionId
+end
+
+local function clearAppearance(model)
+    -- Motors live under a rig's hand, rather than under the cosmetic model.
+    -- Remove them first so no joint retains a destroyed Part1 after a refresh.
+    for _, descendant in ipairs(model:GetDescendants()) do
+        if descendant.Name == "FerSwordGrip" and descendant:IsA("Motor6D") then
+            descendant:Destroy()
+        end
+    end
+    for _, child in ipairs(model:GetChildren()) do
+        if child.Name == "FerSword" or child.Name == "FerFaction" then
+            child:Destroy()
+        end
+    end
+end
+
+local function buildSword(model, swordId)
     local hand = model:FindFirstChild("RightHand") or model:FindFirstChild("Right Arm")
     if not hand or not hand:IsA("BasePart") then
         return nil
     end
     local sword = Instance.new("Model")
     sword.Name = "FerSword"
-    local handle = swordPart(sword, "Grip", Vector3.new(0.23, 0.75, 0.23), Color3.fromRGB(81, 51, 33), Enum.Material.Wood)
+    sword:SetAttribute("SwordId", swordId)
+    local cosmetic = Catalog.Swords[swordId]
+    local bladeColor = Color3.fromRGB(table.unpack(cosmetic.Blade))
+    local guardColor = Color3.fromRGB(table.unpack(cosmetic.Guard))
+    local accentColor = Color3.fromRGB(table.unpack(cosmetic.Accent))
+    local handle = swordPart(sword, "Grip", Vector3.new(0.23, 0.75, 0.23), accentColor, Enum.Material.Wood)
     local isR6 = hand.Name == "Right Arm"
     local gripFrame = CFrame.new(0, isR6 and -0.85 or -0.15, -0.35) * CFrame.Angles(-math.pi / 2, 0, 0)
     handle.CFrame = hand.CFrame * gripFrame
     for _, specification in ipairs({
-        { "Pommel", Vector3.new(0.36, 0.2, 0.36), -0.42, Color3.fromRGB(209, 171, 89), Enum.Material.Metal },
-        { "Guard", Vector3.new(1.05, 0.16, 0.3), 0.45, Color3.fromRGB(209, 171, 89), Enum.Material.Metal },
-        { "Blade", Vector3.new(0.36, 2.8, 0.12), 1.9, Color3.fromRGB(201, 217, 229), Enum.Material.Metal },
-        { "Tip", Vector3.new(0.24, 0.38, 0.12), 3.48, Color3.fromRGB(228, 237, 242), Enum.Material.Metal },
+        { "Pommel", Vector3.new(0.36, 0.2, 0.36), -0.42, guardColor, Enum.Material.Metal },
+        { "Guard", Vector3.new(1.05, 0.16, 0.3), 0.45, guardColor, Enum.Material.Metal },
+        { "Blade", Vector3.new(0.36, 2.8, 0.12), 1.9, bladeColor, Enum.Material.Metal },
+        { "Tip", Vector3.new(0.24, 0.38, 0.12), 3.48, bladeColor:Lerp(Color3.new(1, 1, 1), 0.2), Enum.Material.Metal },
     }) do
         local part = swordPart(sword, specification[1], specification[2], specification[4], specification[5])
-        part.CFrame = handle.CFrame * CFrame.new(0, specification[3], 0)
-        local weld = Instance.new("WeldConstraint")
-        weld.Part0 = handle
-        weld.Part1 = part
-        weld.Parent = part
+        weldTo(part, handle, CFrame.new(0, specification[3], 0))
     end
+    -- Every blade, tip and grip has the same dimensions. These decorations
+    -- remain inside the common silhouette and have no hitbox or combat stats.
+    local jewel = swordPart(sword, "Emblem", Vector3.new(0.2, 0.3, 0.18), accentColor, Enum.Material.Metal)
+    local jewelFrame = CFrame.new(0, 0.52, -0.16)
+    if cosmetic.Style == "Cross" then
+        local cross = swordPart(sword, "Cross", Vector3.new(0.42, 0.09, 0.08), accentColor, Enum.Material.Metal)
+        weldTo(cross, handle, CFrame.new(0, 0.54, -0.23))
+    elseif cosmetic.Style == "Fang" then
+        jewelFrame = jewelFrame * CFrame.Angles(0, 0, math.pi / 4)
+    elseif cosmetic.Style == "Wolf" then
+        for _, side in ipairs({ -1, 1 }) do
+            local fang = swordPart(sword, "Fang", Vector3.new(0.09, 0.3, 0.08), accentColor, Enum.Material.Metal)
+            weldTo(fang, handle, CFrame.new(side * 0.28, 0.55, -0.18) * CFrame.Angles(0, 0, side * 0.35))
+        end
+    elseif cosmetic.Style == "Eye" then
+        jewel.Shape = Enum.PartType.Ball
+        jewel.Size = Vector3.new(0.26, 0.26, 0.18)
+        jewel.Material = Enum.Material.Neon
+    end
+    weldTo(jewel, handle, jewelFrame)
     sword.PrimaryPart = handle
     sword.Parent = model
     local joint = Instance.new("Motor6D")
@@ -85,6 +147,58 @@ local function buildSword(model)
     return sword, joint, gripFrame
 end
 
+local function buildFaction(model, factionId)
+    local torso = model:FindFirstChild("UpperTorso") or model:FindFirstChild("Torso")
+    if not torso or not torso:IsA("BasePart") then
+        return nil
+    end
+    local faction = Catalog.Factions[factionId]
+    local armor = Instance.new("Model")
+    armor.Name = "FerFaction"
+    armor:SetAttribute("FactionId", factionId)
+    local color = Color3.fromRGB(table.unpack(faction.Color))
+    local trim = Color3.fromRGB(table.unpack(faction.Trim))
+    local width = torso.Size.X
+    local height = torso.Size.Y
+    local front = -torso.Size.Z / 2 - 0.08
+    local function detail(name, size, frame, detailColor, material)
+        local part = swordPart(armor, name, size, detailColor or trim, material or Enum.Material.Metal)
+        weldTo(part, torso, frame)
+        return part
+    end
+    detail("Cuirass", Vector3.new(width * 0.96, height * 0.86, 0.15), CFrame.new(0, 0, front), color)
+    detail("Belt", Vector3.new(width, 0.14, 0.17), CFrame.new(0, -height * 0.32, front - 0.06))
+    if factionId == "Redcliff" then
+        detail("StandardVertical", Vector3.new(0.15, height * 0.65, 0.08), CFrame.new(0, 0.04, front - 0.12))
+        detail("StandardHorizontal", Vector3.new(width * 0.55, 0.15, 0.08), CFrame.new(0, height * 0.12, front - 0.12))
+    elseif factionId == "Korblox" then
+        for _, side in ipairs({ -1, 1 }) do
+            detail("IceStripe", Vector3.new(0.13, height * 0.6, 0.08), CFrame.new(side * width * 0.2, 0.02, front - 0.12) * CFrame.Angles(0, 0, side * 0.5))
+        end
+        detail("Crystal", Vector3.new(0.27, 0.27, 0.12), CFrame.new(0, height * 0.15, front - 0.14) * CFrame.Angles(0, 0, math.pi / 4), trim, Enum.Material.Neon)
+    elseif factionId == "Greywolf" then
+        detail("WolfBadge", Vector3.new(width * 0.28, height * 0.3, 0.1), CFrame.new(0, height * 0.12, front - 0.12))
+        for _, side in ipairs({ -1, 1 }) do
+            detail("WolfFang", Vector3.new(0.12, height * 0.23, 0.1), CFrame.new(side * width * 0.12, -height * 0.1, front - 0.12) * CFrame.Angles(0, 0, side * 0.2))
+        end
+    elseif factionId == "Overseer" then
+        local eye = detail("Eye", Vector3.new(width * 0.45, height * 0.25, 0.13), CFrame.new(0, height * 0.12, front - 0.12), trim, Enum.Material.Neon)
+        eye.Shape = Enum.PartType.Ball
+        local pupil = detail("Pupil", Vector3.new(0.15, height * 0.19, 0.1), CFrame.new(0, height * 0.12, front - 0.2), color)
+        pupil.Shape = Enum.PartType.Ball
+    end
+    armor.Parent = model
+    return armor
+end
+
+local function buildAppearance(subject, model)
+    clearAppearance(model)
+    local swordId, factionId = selectedAppearance(subject)
+    local sword, joint, grip = buildSword(model, swordId)
+    local faction = buildFaction(model, factionId)
+    return sword, joint, grip, faction
+end
+
 function CombatService.new(remotes)
     return setmetatable({
         _remotes = remotes,
@@ -92,6 +206,19 @@ function CombatService.new(remotes)
         _enabled = false,
         OnDeath = nil,
     }, CombatService)
+end
+
+function CombatService:DressCharacter(player, model)
+    if typeof(model) ~= "Instance" or not model:IsA("Model") then
+        return nil, "InvalidCharacter"
+    end
+    local state = self._states[player]
+    if state and state.Model == model then
+        return nil, "RegisteredCombatant"
+    end
+    -- Lobby equipment is visual only. Do not register the character, write
+    -- attributes for resources, heal it or change its movement properties.
+    return buildAppearance(player, model)
 end
 
 function CombatService:_effect(kind, payload)
@@ -161,7 +288,7 @@ function CombatService:Register(subject, model, teamId)
     state.RateUpdatedAt = now
     state.NextAttributeAt = 0
     state.PotionReadyAt = 0
-    state.Sword, state.SwordJoint, state.SwordGrip = buildSword(model)
+    state.Sword, state.SwordJoint, state.SwordGrip, state.Faction = buildAppearance(subject, model)
     humanoid.MaxHealth = Config.Player.MaxHealth
     humanoid.Health = Config.Player.MaxHealth
     humanoid.WalkSpeed = Config.Player.WalkSpeed
@@ -187,12 +314,16 @@ function CombatService:Unregister(subject)
     end
     if state.SwordTween then
         state.SwordTween:Cancel()
+        state.SwordTween = nil
     end
     if state.SwordJoint then
         state.SwordJoint:Destroy()
     end
     if state.Sword then
         state.Sword:Destroy()
+    end
+    if state.Faction then
+        state.Faction:Destroy()
     end
     if state.Model.Parent then
         state.Model:SetAttribute("Combatant", false)
@@ -222,17 +353,20 @@ function CombatService:SetEnabled(enabled)
     end
 end
 
-function CombatService:_swing(state)
+function CombatService:_swing(state, side)
     if not state.SwordJoint or not state.SwordJoint.Parent then
         return
     end
     if state.SwordTween then
         state.SwordTween:Cancel()
     end
-    -- Animate only the held sword. Neither locomotion nor the rig's animation
-    -- controller is locked during attacks.
-    state.SwordJoint.C0 = state.SwordGrip * CFrame.Angles(0, -1.15, 0.25)
-    state.SwordTween = TweenService:Create(state.SwordJoint, TweenInfo.new(0.24, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { C0 = state.SwordGrip })
+    -- The same horizontal path and its mirror are the only attacks. Rotation
+    -- around the grip's local Z axis sweeps the blade left/right on R6 and R15.
+    -- It holds at the finish, which is the next attack's starting position.
+    -- Only this Motor6D moves: character locomotion stays entirely available.
+    state.SwordJoint.C0 = state.SwordGrip * CFrame.Angles(0, 0, 1.15 * side)
+    local finish = state.SwordGrip * CFrame.Angles(0, 0, -1.15 * side)
+    state.SwordTween = TweenService:Create(state.SwordJoint, TweenInfo.new(0.24, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), { C0 = finish })
     state.SwordTween:Play()
 end
 
@@ -273,8 +407,8 @@ function CombatService:Act(subject, action, payload)
             return false, reason
         end
         state.PendingAttack = { At = now + Config.Combat.AttackWindup, Direction = direction }
-        self:_swing(state)
-        self:_effect("Swing", { Actor = state.Model, Position = state.Root.Position, Direction = direction, TeamId = state.TeamId })
+        self:_swing(state, state.SwingSide)
+        self:_effect("Swing", { Actor = state.Model, Position = state.Root.Position, Direction = direction, TeamId = state.TeamId, Side = state.SwingSide })
     elseif action == "Sprint" then
         if type(payload.Active) ~= "boolean" then
             return false, "Malformed"

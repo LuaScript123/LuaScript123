@@ -139,7 +139,15 @@ local ok, problem = pcall(function()
 			equal(attacker.Humanoid.JumpHeight, jumpHeight, "jump height during swing")
 			equal(attacker.Humanoid.AutoRotate, autoRotate, "rotation during swing")
 		end
-		swing(check, check)
+		local sides = {}
+		for _ = 1, 2 do
+			swing(function()
+				check()
+				assert(attacker.SwingSide == 1 or attacker.SwingSide == -1, "only two horizontal directions")
+				table.insert(sides, attacker.SwingSide)
+			end, check)
+		end
+		equal(sides[2], -sides[1], "second animation must mirror the first")
 		resetPositions()
 	end)
 

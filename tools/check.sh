@@ -16,4 +16,7 @@ done < <(find src tests -name '*.luau' -type f -print0)
 echo "$count fichiers Luau compiles."
 "$runner" tests/CombatRules.spec.luau
 "$runner" tests/MatchRules.spec.luau
+"$runner" tests/InvitationRules.spec.luau
+"$runner" tests/ProfileRules.spec.luau
 python3 tools/test-match.py "$runner"
+python3 tools/test-profile.py "$runner"

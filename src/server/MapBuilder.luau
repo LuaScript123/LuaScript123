@@ -1,7 +1,8 @@
--- An original arena built entirely from Roblox primitives. No downloaded assets.
+-- An original arena and social courtyard built from Roblox primitives.
 local Lighting = game:GetService("Lighting")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Config = require(ReplicatedStorage:WaitForChild("MedievalShared"):WaitForChild("Config"))
+local Catalog = require(ReplicatedStorage:WaitForChild("MedievalShared"):WaitForChild("Catalog"))
 
 local MapBuilder = {}
 
@@ -241,6 +242,155 @@ function MapBuilder.Build()
         end
     end
 
+    -- The lobby is a separate, enclosed courtyard. No walkable bridge leads to
+    -- the battle arena: MatchService moves only consenting participants there.
+    local lobbyCenter = Vector3.new(0, 3, 300)
+    local lobbySpawns = {}
+    block("LobbyGround", Vector3.new(164, 4, 144), Vector3.new(0, -2, 300),
+        COLORS.StoneLight, Enum.Material.Cobblestone)
+    block("LobbyFoundation", Vector3.new(172, 8, 152), Vector3.new(0, -8, 300),
+        COLORS.StoneDark, Enum.Material.Slate)
+    block("LobbyNorthSouthPaving", Vector3.new(25, 0.08, 132), Vector3.new(0, 0.04, 300),
+        COLORS.Road, Enum.Material.Sandstone, false)
+    block("LobbyEastWestPaving", Vector3.new(154, 0.09, 24), Vector3.new(0, 0.05, 300),
+        COLORS.Road, Enum.Material.Sandstone, false)
+    disc("LobbyCentralMedallionBorder", 25, 0.1, Vector3.new(0, 0.08, 300),
+        COLORS.StoneDark, Enum.Material.Slate, false)
+    disc("LobbyCentralMedallion", 23.5, 0.1, Vector3.new(0, 0.14, 300),
+        COLORS.StoneLight, Enum.Material.Sandstone, false)
+    for _, angle in ipairs({ 0, math.pi / 4, math.pi / 2, math.pi * 3 / 4 }) do
+        part("LobbyCompassInlay", Vector3.new(1, 0.08, 39),
+            CFrame.new(0, 0.23, 300) * CFrame.Angles(0, angle, 0),
+            COLORS.Gold, Enum.Material.Metal, false)
+    end
+
+    -- High flat walls have no climbable route. Their coping cannot be reached
+    -- with a normal character jump, even from the nearby low decorative seats.
+    for _, sign in ipairs({ -1, 1 }) do
+        block("LobbyBoundarySide", Vector3.new(3, 18, 144), Vector3.new(sign * 81, 9, 300), COLORS.Stone)
+        block("LobbyBoundaryEnd", Vector3.new(160, 18, 3), Vector3.new(0, 9, 300 + sign * 71), COLORS.Stone)
+        block("LobbyWallCoping", Vector3.new(4, 1, 144), Vector3.new(sign * 81, 18.5, 300), COLORS.StoneDark)
+        block("LobbyWallCoping", Vector3.new(160, 1, 4), Vector3.new(0, 18.5, 300 + sign * 71), COLORS.StoneDark)
+        for x = -72, 72, 12 do
+            block("LobbyEndBattlement", Vector3.new(4, 3, 3), Vector3.new(x, 20.5, 300 + sign * 71), COLORS.StoneLight)
+        end
+        for z = 240, 360, 12 do
+            block("LobbySideBattlement", Vector3.new(3, 3, 4), Vector3.new(sign * 81, 20.5, z), COLORS.StoneLight)
+        end
+        for _, z in ipairs({ 233, 367 }) do
+            block("LobbyCornerKeep", Vector3.new(10, 24, 10), Vector3.new(sign * 76, 12, z), COLORS.StoneDark)
+            block("LobbyCornerCrown", Vector3.new(12, 1.5, 12), Vector3.new(sign * 76, 24.75, z), COLORS.StoneLight)
+            for _, offset in ipairs({ -4, 4 }) do
+                block("LobbyKeepMerlon", Vector3.new(3, 3, 3),
+                    Vector3.new(sign * 76 + offset, 27, z - 4), COLORS.StoneLight)
+                block("LobbyKeepMerlon", Vector3.new(3, 3, 3),
+                    Vector3.new(sign * 76 + offset, 27, z + 4), COLORS.StoneLight)
+            end
+        end
+    end
+    -- A sealed, purely decorative gate faces the distant arena.
+    block("LobbySealedGate", Vector3.new(18, 15, 0.5), Vector3.new(0, 7.5, 230.8), COLORS.Wood, Enum.Material.WoodPlanks)
+    for _, x in ipairs({ -10.5, 10.5 }) do
+        block("LobbyGateColumn", Vector3.new(3, 18, 4), Vector3.new(x, 9, 231), COLORS.StoneLight)
+    end
+    block("LobbyGateLintel", Vector3.new(24, 3, 4), Vector3.new(0, 17, 231), COLORS.StoneLight)
+    for _, x in ipairs({ -5, 0, 5 }) do
+        block("LobbyGateIronwork", Vector3.new(0.6, 14, 0.2), Vector3.new(x, 7.5, 231.15), COLORS.StoneDark, Enum.Material.Metal, false)
+    end
+
+    local stationPositions = {
+        Redcliff = Vector3.new(-54, 0, 262),
+        Korblox = Vector3.new(54, 0, 262),
+        Greywolf = Vector3.new(-54, 0, 338),
+        Overseer = Vector3.new(54, 0, 338),
+    }
+    for _, factionId in ipairs(Catalog.FactionOrder) do
+        local faction = Catalog.Factions[factionId]
+        local position = stationPositions[factionId]
+        local tint = Color3.fromRGB(table.unpack(faction.Color))
+        local trim = Color3.fromRGB(table.unpack(faction.Trim))
+        disc("Lobby" .. factionId .. "Medallion", 12, 0.12, position + Vector3.new(0, 0.12, 0), tint,
+            Enum.Material.Sandstone, false)
+        block("Lobby" .. factionId .. "Canopy", Vector3.new(27, 1, 25), position + Vector3.new(0, 14, 0),
+            tint, Enum.Material.Slate)
+        block("Lobby" .. factionId .. "CanopyTrim", Vector3.new(28, 0.4, 26), position + Vector3.new(0, 13.3, 0),
+            trim, Enum.Material.Metal, false)
+        for _, xOffset in ipairs({ -11, 11 }) do
+            for _, zOffset in ipairs({ -10, 10 }) do
+                block("Lobby" .. factionId .. "Column", Vector3.new(1.5, 13, 1.5),
+                    position + Vector3.new(xOffset, 6.5, zOffset), COLORS.StoneLight)
+            end
+        end
+        local outward = position.X < 0 and -1 or 1
+        block("Lobby" .. factionId .. "BannerPole", Vector3.new(0.4, 12, 0.4),
+            position + Vector3.new(outward * 9, 6, 0), COLORS.Wood, Enum.Material.Wood, false)
+        block("Lobby" .. factionId .. "Banner", Vector3.new(0.2, 7, 7),
+            position + Vector3.new(outward * 9, 8.5, 0), tint, Enum.Material.Fabric, false)
+        block("Lobby" .. factionId .. "BannerStripe", Vector3.new(0.3, 0.6, 7.2),
+            position + Vector3.new(outward * 9, 5.5, 0), trim, Enum.Material.Metal, false)
+        -- Distinct primitive emblems identify the four original faction stalls.
+        local emblem = CFrame.new(position + Vector3.new(outward * 9.2, 9, 0))
+        if factionId == "Redcliff" then
+            part("LobbyRedcliffCross", Vector3.new(0.2, 3.8, 0.7), emblem, trim, Enum.Material.Metal, false)
+            part("LobbyRedcliffCrossArms", Vector3.new(0.2, 0.7, 3), emblem, trim, Enum.Material.Metal, false)
+        elseif factionId == "Korblox" then
+            for _, side in ipairs({ -1, 1 }) do
+                part("LobbyKorbloxFang", Vector3.new(0.3, 3.5, 0.7),
+                    emblem * CFrame.new(0, 0, side) * CFrame.Angles(side * 0.3, 0, 0), trim,
+                    Enum.Material.Metal, false)
+            end
+        elseif factionId == "Greywolf" then
+            part("LobbyGreywolfDiamond", Vector3.new(0.3, 2.6, 2.6),
+                emblem * CFrame.Angles(math.pi / 4, 0, 0), trim, Enum.Material.Metal, false)
+        else
+            part("LobbyOverseerEye", Vector3.new(0.4, 2.2, 3.8), emblem,
+                trim, Enum.Material.Neon, false, Enum.PartType.Ball)
+            part("LobbyOverseerPupil", Vector3.new(0.5, 1.6, 0.8), emblem,
+                COLORS.StoneDark, Enum.Material.Metal, false)
+        end
+    end
+
+    -- Five cosmetic display swords. They are scenery; purchases/equipping are
+    -- handled by the lobby menu and authoritative profile service, never touch.
+    block("LobbySwordShopCounter", Vector3.new(42, 3, 5), Vector3.new(0, 1.5, 353), COLORS.Wood, Enum.Material.WoodPlanks)
+    block("LobbySwordShopCanopy", Vector3.new(47, 1.2, 20), Vector3.new(0, 14, 357), COLORS.Roof)
+    for _, x in ipairs({ -22, 22 }) do
+        block("LobbySwordShopPost", Vector3.new(1.5, 13.5, 1.5), Vector3.new(x, 6.75, 350), COLORS.Wood, Enum.Material.Wood)
+        block("LobbySwordShopPost", Vector3.new(1.5, 13.5, 1.5), Vector3.new(x, 6.75, 364), COLORS.Wood, Enum.Material.Wood)
+    end
+    for index, swordId in ipairs(Catalog.SwordOrder) do
+        local sword = Catalog.Swords[swordId]
+        local x = (index - 3) * 7.5
+        local blade = Color3.fromRGB(table.unpack(sword.Blade))
+        local guard = Color3.fromRGB(table.unpack(sword.Guard))
+        disc("LobbySword" .. swordId .. "Plinth", 2.5, 0.4, Vector3.new(x, 3.25, 353), COLORS.StoneDark)
+        block("LobbySword" .. swordId .. "Grip", Vector3.new(0.35, 1.3, 0.4), Vector3.new(x, 4.1, 353),
+            Color3.fromRGB(table.unpack(sword.Accent)), Enum.Material.Wood, false)
+        block("LobbySword" .. swordId .. "Guard", Vector3.new(2.3, 0.35, 0.5), Vector3.new(x, 4.8, 353), guard, Enum.Material.Metal, false)
+        block("LobbySword" .. swordId .. "Blade", Vector3.new(0.75, 4, 0.2), Vector3.new(x, 6.95, 353), blade, Enum.Material.Metal, false)
+        part("LobbySword" .. swordId .. "Tip", Vector3.new(0.55, 0.55, 0.2),
+            CFrame.new(x, 9, 353) * CFrame.Angles(0, 0, math.pi / 4), blade, Enum.Material.Metal, false)
+    end
+
+    for _, x in ipairs({ -31, 31 }) do
+        for _, z in ipairs({ 244, 356 }) do
+            block("LobbyStoneSeat", Vector3.new(10, 2, 3), Vector3.new(x, 1, z), COLORS.StoneDark)
+            block("LobbySeatTrim", Vector3.new(10.5, 0.3, 3.5), Vector3.new(x, 2.15, z), COLORS.StoneLight)
+        end
+    end
+    for _, x in ipairs({ -31, 31 }) do
+        for _, z in ipairs({ 276, 324 }) do
+            block("LobbyLampPost", Vector3.new(0.6, 10, 0.6), Vector3.new(x, 5, z), COLORS.Wood, Enum.Material.Wood, false)
+            light(Vector3.new(x, 10.5, z))
+        end
+    end
+    -- Characters face the clear central meeting circle at arrival.
+    for _, z in ipairs({ 284, 316 }) do
+        for _, x in ipairs({ -24, -8, 8, 24 }) do
+            table.insert(lobbySpawns, CFrame.lookAt(Vector3.new(x, 3.5, z), Vector3.new(0, 3.5, 300)))
+        end
+    end
+
     Lighting.ClockTime = 16.4
     Lighting.Brightness = 2.4
     Lighting.Ambient = Color3.fromRGB(113, 117, 133)
@@ -260,7 +410,10 @@ function MapBuilder.Build()
     atmosphere.Glare = 0.12
     atmosphere.Haze = 1.2
     arena.Parent = workspace
-    return { Model = arena, Spawns = spawns, Center = Vector3.new(0, 3, 0) }
+    return {
+        Model = arena, Spawns = spawns, Center = Vector3.new(0, 3, 0),
+        LobbySpawns = lobbySpawns, LobbyCenter = lobbyCenter,
+    }
 end
 
 return MapBuilder

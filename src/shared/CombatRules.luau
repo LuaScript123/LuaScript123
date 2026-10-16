@@ -22,6 +22,8 @@ function Rules.NewState(config, now)
         LastAttackAt = -math.huge,
         LastSpendAt = now,
         LastPotionAt = -math.huge,
+        NextSwingSide = 1,
+        SwingSide = nil,
         Potions = potions,
     }
 end
@@ -39,6 +41,9 @@ function Rules.ConsumeAttack(state, config, now)
     state.Stamina = math.max(0, state.Stamina - config.Combat.AttackCost)
     state.LastAttackAt = now
     state.LastSpendAt = now
+    -- Only accepted attacks advance the two mirrored sword animations.
+    state.SwingSide = state.NextSwingSide
+    state.NextSwingSide = -state.SwingSide
     -- Taking an offensive action ends the attacker's own protection.
     state.SpawnProtectedUntil = 0
     return true

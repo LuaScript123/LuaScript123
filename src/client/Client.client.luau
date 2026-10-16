@@ -8,11 +8,17 @@ local Debris = game:GetService("Debris")
 local StarterGui = game:GetService("StarterGui")
 
 local player = Players.LocalPlayer
-local Config = require(ReplicatedStorage:WaitForChild("MedievalShared"):WaitForChild("Config"))
+local shared = ReplicatedStorage:WaitForChild("MedievalShared")
+local Config = require(shared:WaitForChild("Config"))
+local Catalog = require(shared:WaitForChild("Catalog"))
+local LobbyUI = require(script.Parent:WaitForChild("LobbyUI"))
+local CameraLock = require(script.Parent:WaitForChild("CameraLock"))
 local remotes = ReplicatedStorage:WaitForChild("MedievalRemotes")
 local Action = remotes:WaitForChild("Action")
 local State = remotes:WaitForChild("State")
 local Effects = remotes:WaitForChild("Effects")
+local Lobby = remotes:WaitForChild("Lobby")
+local Profile = remotes:WaitForChild("Profile")
 
 pcall(function()
 	StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, false)
@@ -217,7 +223,7 @@ for order, size in ipairs(Config.PotionOrder) do
 	potionButtons[size] = { Button = slot, Count = count, Cooldown = cooldown }
 end
 
-local helpLabel = label(root, "CLIC  Frapper · −10 endurance\nMAJ  Courir · −1 endurance/s\nZ / X / C  Potions · délai commun 60 s", {
+local helpLabel = label(root, "CLIC  Frapper · −10 endurance\nMAJ  Courir · −1 endurance/s · CTRL  Caméra\nZ / X / C  Potions · délai commun 60 s", {
 	AnchorPoint = Vector2.new(1, 1), Position = UDim2.new(1, -26, 1, -32),
 	Size = UDim2.fromOffset(290, 66), TextSize = 12, TextColor3 = palette.Muted,
 	TextXAlignment = Enum.TextXAlignment.Right, TextYAlignment = Enum.TextYAlignment.Center,
@@ -274,7 +280,7 @@ local deathTitle = label(deathPanel, "ÉLIMINÉ", {
 	TextSize = 21, Font = Enum.Font.GothamBold, TextXAlignment = Enum.TextXAlignment.Center,
 	TextColor3 = palette.Gold, ZIndex = 16,
 })
-local respawnLabel = label(deathPanel, "En attente de la prochaine manche", {
+local respawnLabel = label(deathPanel, "Retour au lobby après le combat", {
 	Position = UDim2.fromOffset(15, 49), Size = UDim2.new(1, -30, 0, 52),
 	TextSize = 12, TextColor3 = palette.Muted, TextWrapped = true,
 	TextXAlignment = Enum.TextXAlignment.Center, ZIndex = 16,
@@ -326,13 +332,28 @@ local deathConnection
 local cameraWasSpectating = false
 local spectatorTarget
 local watchingName
+local lobbyUI
+local cameraLock = CameraLock.new(player)
+local lockButton = button(root, "CAMÉRA\nLIBRE", {
+	AnchorPoint = Vector2.new(1, 1), Position = UDim2.new(1, -24, 1, -330),
+	Size = UDim2.fromOffset(85, 49), TextSize = 10, Visible = UserInputService.TouchEnabled,
+})
+lockButton.Activated:Connect(function() cameraLock:Toggle() end)
+
+local function activity()
+	return player:GetAttribute("Activity") or "Lobby"
+end
+
+local function menuOpen()
+	return scoreboard.Visible or (lobbyUI ~= nil and lobbyUI:IsOpen())
+end
 
 local function alive()
 	return character ~= nil and character.Parent ~= nil and humanoid ~= nil and humanoid.Health > 0
 end
 
 local function canAct()
-	return alive() and snapshot ~= nil and snapshot.Phase == "Battle"
+	return alive() and activity() == "Battle" and snapshot ~= nil and snapshot.Phase == "Battle" and not menuOpen()
 		and player:GetAttribute("Spectating") ~= true and player:GetAttribute("Eliminated") ~= true
 end
 
@@ -445,16 +466,25 @@ end
 
 local function showScoreboard(visible)
 	scoreboard.Visible = visible
-	if visible then refreshScoreboard() end
+	cameraLock:SetMenuOpen(menuOpen())
+	if visible then releaseSprint() refreshScoreboard() end
 end
 scoresButton.Activated:Connect(function() showScoreboard(not scoreboard.Visible) end)
 closeScores.Activated:Connect(function() showScoreboard(false) end)
+
+lobbyUI = LobbyUI.new(player, root, Action, Config, Catalog, function(open)
+	if open then releaseSprint() end
+	cameraLock:SetMenuOpen(open or scoreboard.Visible)
+end)
+Lobby.OnClientEvent:Connect(function(lobby) lobbyUI:SetLobby(lobby) end)
+Profile.OnClientEvent:Connect(function(profile) lobbyUI:SetProfile(profile) end)
 
 UserInputService.InputBegan:Connect(function(input, processed)
 	if processed or UserInputService:GetFocusedTextBox() then return end
 	if input.UserInputType == Enum.UserInputType.MouseButton1 then
 		attack()
 	elseif input.KeyCode == Enum.KeyCode.LeftShift or input.KeyCode == Enum.KeyCode.RightShift then
+		if menuOpen() then return end
 		shiftHeld[input.KeyCode] = true
 		setSprint(true)
 	elseif input.KeyCode == Enum.KeyCode.Z then drink("Small")
@@ -492,7 +522,7 @@ local function bindCharacter(model)
 	if character ~= model or not found or not found:IsA("Humanoid") then return end
 	humanoid = found
 	local camera = workspace.CurrentCamera
-	if camera and player:GetAttribute("Spectating") ~= true then
+	if camera and (activity() == "Lobby" or player:GetAttribute("Spectating") ~= true) then
 		camera.CameraType = Enum.CameraType.Custom
 		camera.CameraSubject = found
 		cameraWasSpectating = false
@@ -523,8 +553,10 @@ local function layout()
 	heading.Visible = not compact
 	teamLabel.Visible = not compact
 	helpLabel.Visible = not touch and not compact
-	attackButton.Visible = touch
-	sprintButton.Visible = touch
+	attackButton.Visible = touch and activity() == "Battle"
+	sprintButton.Visible = touch and activity() == "Battle"
+	lockButton.Visible = touch
+	lockButton.Position = UDim2.new(1, -26, 1, narrowTouch and -326 or -263)
 	scorePanel.Size = UDim2.fromOffset(math.min(compact and 390 or 460, viewport.X - 30), compact and 66 or 76)
 	blueScore.TextSize = compact and 15 or 20
 	redScore.TextSize = compact and 15 or 20
@@ -575,17 +607,27 @@ State.OnClientEvent:Connect(function(newState)
 	receivedAt = os.clock()
 	if not canAct() then releaseSprint() end
 end)
-for _, attribute in ipairs({ "Spectating", "Eliminated" }) do
+for _, attribute in ipairs({ "Spectating", "Eliminated", "Activity" }) do
 	player:GetAttributeChangedSignal(attribute):Connect(function()
 		if not canAct() then releaseSprint() end
+		if attribute == "Activity" then
+			lobbyUI:SetActivity(activity())
+			if activity() == "Lobby" then
+				deadAt = nil
+				deathPanel.Visible = false
+			end
+			layout()
+		end
 	end)
 end
 
 local function updateSpectatorCamera()
 	local camera = workspace.CurrentCamera
 	if not camera then return end
-	local spectator = player:GetAttribute("Spectating") == true or player:GetAttribute("Eliminated") == true
-		or (deadAt ~= nil and not alive())
+	-- Lobby players always keep their own physical character and camera.
+	local spectator = activity() ~= "Lobby" and (player:GetAttribute("Spectating") == true
+		or player:GetAttribute("Eliminated") == true or (deadAt ~= nil and not alive()))
+	cameraLock:SetSpectating(spectator)
 	if not spectator then
 		if cameraWasSpectating and humanoid and humanoid.Health > 0 then
 			camera.CameraType = Enum.CameraType.Custom
@@ -662,6 +704,7 @@ Effects.OnClientEvent:Connect(function(kind, data)
 	if kind == "Toast" then
 		showToast(data.Text)
 	elseif kind == "Killfeed" then
+		if activity() == "Lobby" then return end
 		feedOrder += 1
 		local line = label(feed, tostring(data.Killer or "Un combattant") .. "  >  " .. tostring(data.Victim or "un adversaire"), {
 			Size = UDim2.new(1, 0, 0, 23), BackgroundColor3 = palette.Inset,
@@ -690,11 +733,14 @@ Effects.OnClientEvent:Connect(function(kind, data)
 		local team = Config.Teams[actor:GetAttribute("TeamId")]
 		local color = team and rgb(team.Color) or palette.Gold
 		for segment = 0, 5 do
-			local a = math.rad(-55 + segment * 18)
-			local b = math.rad(-55 + (segment + 1) * 18)
+			local side = data.Side == -1 and -1 or 1
+			local a = math.rad((-55 + segment * 18) * side)
+			local b = math.rad((-55 + (segment + 1) * 18) * side)
 			local p1 = center + (forward * math.cos(a) + right * math.sin(a)) * 3.8
 			local p2 = center + (forward * math.cos(b) + right * math.sin(b)) * 3.8
-			effectPart(color, CFrame.lookAt((p1 + p2) / 2, p2), Vector3.new(0.07, 0.07, (p2 - p1).Magnitude), 0.2)
+			task.delay(segment * 0.014, function()
+				effectPart(color, CFrame.lookAt((p1 + p2) / 2, p2), Vector3.new(0.07, 0.07, (p2 - p1).Magnitude), 0.2)
+			end)
 		end
 	elseif kind == "Hit" then
 		local position = effectPosition(data)
@@ -745,6 +791,17 @@ RunService.Heartbeat:Connect(function(dt)
 	end
 	if updateElapsed < 0.08 then return end
 	updateElapsed = 0
+	lobbyUI:Step()
+	cameraLock:SetMenuOpen(menuOpen())
+	lockButton.Text = cameraLock.Enabled and "CAMÉRA\nVERROUILLÉE" or "CAMÉRA\nLIBRE"
+	local inLobby = activity() == "Lobby"
+	scorePanel.Visible = not inLobby
+	vitals.Visible = not inLobby
+	hotbar.Visible = not inLobby
+	attackButton.Visible = UserInputService.TouchEnabled and not inLobby
+	sprintButton.Visible = UserInputService.TouchEnabled and not inLobby
+	helpLabel.Visible = not compact and not UserInputService.TouchEnabled and not inLobby
+	feed.Visible = not inLobby and not (compact and root.AbsoluteSize.Y < 500)
 	local maxHealth = humanoid and humanoid.MaxHealth or Config.Player.MaxHealth
 	local health = humanoid and math.max(0, humanoid.Health) or 0
 	local maxStamina = character and character:GetAttribute("MaxStamina") or Config.Combat.MaxStamina
@@ -757,7 +814,7 @@ RunService.Heartbeat:Connect(function(dt)
 	staminaBar.Fill.Size = UDim2.fromScale(math.clamp(stamina / maxStamina, 0, 1), 1)
 	staminaBar.Fill.BackgroundColor3 = stamina < Config.Combat.AttackCost and palette.Danger or palette.Gold
 	staminaBar.Title.Text = character and character:GetAttribute("Sprinting") and "ENDURANCE · COURSE" or "ENDURANCE"
-	protectionLabel.Visible = alive() and character:GetAttribute("SpawnProtected") == true
+	protectionLabel.Visible = not inLobby and alive() and character:GetAttribute("SpawnProtected") == true
 	local actionable = canAct()
 	local remainingCooldown = potionCooldown()
 	attackButton.Interactable = actionable
@@ -777,20 +834,20 @@ RunService.Heartbeat:Connect(function(dt)
 		entry.Cooldown.Text = tostring(remainingCooldown) .. " s"
 	end
 	local team = Config.Teams[player:GetAttribute("TeamId")]
-	teamLabel.Text = team and ("Votre équipe · " .. team.Name) or "Spectateur · prochaine manche"
+	teamLabel.Text = inLobby and "Lobby · combats sur invitation" or (team and ("Votre équipe · " .. team.Name) or "Combat en cours")
 	teamLabel.TextColor3 = team and rgb(team.Color) or palette.Muted
 	local dead = humanoid ~= nil and humanoid.Health <= 0
 	if dead and not deadAt then deadAt = os.clock() end
-	local eliminated = player:GetAttribute("Eliminated") == true or (deadAt ~= nil and not alive())
-	local spectating = player:GetAttribute("Spectating") == true
+	local eliminated = not inLobby and (player:GetAttribute("Eliminated") == true or (deadAt ~= nil and not alive()))
+	local spectating = not inLobby and player:GetAttribute("Spectating") == true
 	deathPanel.Visible = eliminated or spectating
 	crosshair.Visible = actionable
 	if eliminated or spectating then
 		deathTitle.Text = eliminated and "ÉLIMINÉ" or "SPECTATEUR"
 		respawnLabel.Text = (watchingName and ("Vous regardez " .. watchingName .. ".\n") or "")
-			.. "En attente de la prochaine manche."
+			.. "Retour au lobby à la fin du combat."
 	end
-	if snapshot then
+	if snapshot and not inLobby then
 		local scores = snapshot.Scores or {}
 		local survivors = snapshot.Alive or {}
 		local teamSize = snapshot.TeamSize or Config.Game.TeamSize or 2
@@ -806,30 +863,21 @@ RunService.Heartbeat:Connect(function(dt)
 			seconds = math.max(0, math.ceil((tonumber(snapshot.TimeLeft) or 0) - elapsedSinceState))
 		end
 		timerLabel.Text = string.format("%02d:%02d", math.floor(seconds / 60), seconds % 60)
-		if snapshot.Phase == "Intermission" then
+		if snapshot.Phase == "Results" then
 			local winner = Config.Teams[snapshot.Winner]
-			local firstRound = (snapshot.Round or 0) == 0
-			phaseLabel.Text = firstRound and "2 CONTRE 2 · PRÉPAREZ-VOUS"
-				or (winner and ("Victoire des " .. winner.Name .. " · prochaine manche") or "Prochaine manche · préparation")
+			phaseLabel.Text = "COMBAT TERMINÉ · RETOUR AU LOBBY"
 			deathPanel.Visible = true
-			if firstRound then
-				deathTitle.Text = "PRÉPAREZ-VOUS"
-			elseif winner and team then
-				deathTitle.Text = snapshot.Winner == player:GetAttribute("TeamId") and "VICTOIRE !" or "DÉFAITE"
-			else
-				deathTitle.Text = (snapshot.Round or 0) > 0 and "FIN DE MANCHE" or "PROCHAINE MANCHE"
-			end
+			deathTitle.Text = winner and (snapshot.Winner == player:GetAttribute("TeamId") and "VICTOIRE !" or "DÉFAITE") or "FIN DU COMBAT"
 			local message = type(snapshot.Message) == "string" and snapshot.Message ~= "" and snapshot.Message
-				or (winner and ("Les " .. winner.Name .. " remportent la manche.") or "La bataille reprend bientôt.")
-			respawnLabel.Text = message .. "\nProchaine manche dans " .. seconds .. " s."
+				or (winner and ("Les " .. winner.Name .. " remportent le combat.") or "Le combat est terminé.")
+			respawnLabel.Text = message .. "\nRetour au lobby dans " .. seconds .. " s."
 		elseif snapshot.Phase == "Preparing" then
-			phaseLabel.Text = "MANCHE " .. tostring(snapshot.Round or 1) .. " · PRÉPARATION 2V2"
+			phaseLabel.Text = "PRÉPARATION · " .. tostring(teamSize) .. " CONTRE " .. tostring(teamSize)
 			deathPanel.Visible = true
-			deathTitle.Text = spectating and "SPECTATEUR" or "PRÉPAREZ-VOUS"
-			respawnLabel.Text = spectating and ("En attente d'une place.\nPréparation · " .. seconds .. " s restantes.")
-				or ("Chargement des combattants…\nPréparation · " .. seconds .. " s restantes.")
+			deathTitle.Text = "PRÉPAREZ-VOUS"
+			respawnLabel.Text = "Chargement des combattants…\nPréparation · " .. seconds .. " s restantes."
 		else
-			phaseLabel.Text = "MANCHE " .. tostring(snapshot.Round or 1) .. " · 2V2 · DERNIÈRE ÉQUIPE EN VIE"
+			phaseLabel.Text = tostring(teamSize) .. " CONTRE " .. tostring(teamSize) .. " · DERNIÈRE ÉQUIPE EN VIE"
 		end
 	end
 end)

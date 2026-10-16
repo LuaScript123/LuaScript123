@@ -87,7 +87,13 @@ function ObjectMethods:FindFirstChild(name)
     end
     return nil
 end
-function ObjectMethods:WaitForChild(name) return self:FindFirstChild(name) or Instance.new("Folder") end
+function ObjectMethods:WaitForChild(name)
+    local existing = self:FindFirstChild(name)
+    if existing then return existing end
+    local child = Instance.new("Folder")
+    child.Name, child.Parent = name, self
+    return child
+end
 function ObjectMethods:Destroy() self.Destroyed = true end
 
 local workspace = Instance.new("Workspace")
@@ -112,30 +118,58 @@ end
 
 local function validate(map)
     local count = 0
+    local allSpawns = {}
+    for team, positions in pairs(map.Spawns) do
+        for index, spawn in ipairs(positions) do
+            table.insert(allSpawns, { Name = team .. tostring(index), Position = spawn.Position })
+        end
+    end
+    assert(map.LobbySpawns and #map.LobbySpawns == 8, "Expected eight lobby spawns")
+    assert(map.LobbyCenter and map.LobbyCenter.Z >= 240, "Lobby must be separated from arena")
+    for index, spawn in ipairs(map.LobbySpawns) do
+        table.insert(allSpawns, { Name = "Lobby" .. tostring(index), Position = spawn.Position })
+    end
+    local supported = {}
+    local arenaFloor, lobbyFloor
     for _, object in ipairs(allInstances) do
         if object.ClassName == "Part" or object.ClassName == "WedgePart" then
             count += 1
             if object.CanCollide then
                 local minimum, maximum = bounds(object)
-                if minimum.Y < 6.2 and maximum.Y > 0.3 and maximum.X > -75 and minimum.X < 75 then
-                    assert(minimum.Z >= 12 or maximum.Z <= -12,
-                        "Obstacle in 24-stud central lane: " .. object.Name)
+                if object.Name == "ArenaGround" then arenaFloor = { Min = minimum, Max = maximum } end
+                if object.Name == "LobbyGround" then lobbyFloor = { Min = minimum, Max = maximum } end
+                if minimum.Y < 6.2 and maximum.Y > 0.3 then
+                    assert(not (maximum.X > -75 and minimum.X < 75 and minimum.Z < 12 and maximum.Z > -12),
+                        "Obstacle in arena central lane: " .. object.Name)
+                    local center = map.LobbyCenter
+                    assert(not (maximum.X > center.X - 18 and minimum.X < center.X + 18
+                        and maximum.Z > center.Z - 24 and minimum.Z < center.Z + 24),
+                        "Obstacle in lobby central meeting area: " .. object.Name)
                 end
-                for team, positions in pairs(map.Spawns) do
-                    for _, spawn in ipairs(positions) do
-                        local p = spawn.Position
-                        assert(not (minimum.X < p.X + 1.5 and maximum.X > p.X - 1.5
-                            and minimum.Z < p.Z + 1.5 and maximum.Z > p.Z - 1.5
-                            and minimum.Y < p.Y + 2.5 and maximum.Y > p.Y - 2.5),
-                            "Spawn collision: " .. team .. " / " .. object.Name)
+                for _, spawn in ipairs(allSpawns) do
+                    local p = spawn.Position
+                    assert(p.Y == 3.5, "R6 spawn must use root Y=3.5: " .. spawn.Name)
+                    assert(not (minimum.X < p.X + 1.5 and maximum.X > p.X - 1.5
+                        and minimum.Z < p.Z + 1.5 and maximum.Z > p.Z - 1.5
+                        and minimum.Y < p.Y + 2.5 and maximum.Y > p.Y - 2.5),
+                        "Spawn collision: " .. spawn.Name .. " / " .. object.Name)
+                    if minimum.X < p.X - 1.5 and maximum.X > p.X + 1.5
+                        and minimum.Z < p.Z - 1.5 and maximum.Z > p.Z + 1.5
+                        and math.abs(maximum.Y) < 0.01 then
+                        supported[spawn.Name] = true
                     end
                 end
             end
         end
     end
+    for _, spawn in ipairs(allSpawns) do
+        assert(supported[spawn.Name], "No stable floor below spawn: " .. spawn.Name)
+    end
+    assert(arenaFloor and lobbyFloor, "Both zones need a stable collision floor")
+    assert(lobbyFloor.Min.Z - arenaFloor.Max.Z >= 100, "Lobby and arena must remain separated")
     assert(count < 1000, "Map exceeds primitive budget")
     assert(#map.Spawns.Dawn == 3 and #map.Spawns.Ember == 3, "Expected three spawns per team")
-    print("<!-- Geometry verified: " .. count .. " primitives; six clear spawns; central lane clear. -->")
+    print("<!-- Geometry verified: " .. count .. " primitives; six arena and eight lobby spawns clear and supported; both meeting lanes clear. -->")
 end
 
 local function escape(value)

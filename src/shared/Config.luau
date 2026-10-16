@@ -3,11 +3,17 @@ local Config = {}
 Config.Game = {
     Name = "Fer & Fioles",
     TeamSize = 2,
-    FillWithBots = true,
+    FillWithBots = false,
     IntermissionSeconds = 8,
     PreparingTimeoutSeconds = 20,
     SpawnProtectionSeconds = 3,
+    ResultSeconds = 6,
+    LobbyRespawnSeconds = 3,
+    AllowedModes = { Duel = true, Teams = true },
 }
+Config.Invites = { CooldownSeconds = 15, ExpiresSeconds = 25 }
+Config.Rewards = { Win = 50, Loss = 10, Draw = 10 }
+Config.Persistence = { StoreName = "FerEtFiolesProfiles_v1", AutosaveSeconds = 60, LeaseSeconds = 180 }
 Config.Teams = {
     Dawn = { Name = "Bleus", Color = { 75, 151, 222 } },
     Ember = { Name = "Rouges", Color = { 218, 91, 65 } },

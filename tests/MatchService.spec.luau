@@ -103,7 +103,11 @@ function Node:Destroy()
 end
 local Players = instance("Players")
 function Players:GetPlayers() return self:GetChildren() end
-local services = { Players = Players, Teams = instance("Teams"), ReplicatedStorage = instance("ReplicatedStorage") }
+local guid = 0
+local services = { Players = Players, Teams = instance("Teams"), ReplicatedStorage = instance("ReplicatedStorage"),
+    Workspace = { GetServerTimeNow = function() return 100000 + clock end },
+    HttpService = { GenerateGUID = function() guid += 1; return "match-guid:" .. tostring(guid) end } }
+
 local game = { GetService = function(_, name) return assert(services[name], "Unimplemented service: " .. name) end }
 local Instance = { new = instance }
 local BrickColor = { new = function(color) return color end }
@@ -113,13 +117,17 @@ local Modules = {}
 local require = function(module) return assert(Modules[module.Name], "Unknown module: " .. tostring(module.Name)) end
 local shared = instance("Folder", "MedievalShared")
 shared.Parent = services.ReplicatedStorage
-for _, name in ipairs({ "Config", "MatchRules" }) do
+for _, name in ipairs({ "Config", "MatchRules", "InvitationRules" }) do
 	local module = instance("ModuleScript", name)
 	module.Parent = shared
 end
+local userSerial = 0
 local function player(name)
+	userSerial += 1
 	local result = instance("Player", name)
 	result.DisplayName = name
+	result.UserId = userSerial
+	result:SetAttribute("ProfileLoaded", true)
 	result.CharacterAdded = signal()
 	result.CharacterRemoving = signal()
 	result.Loads = 0
@@ -154,7 +162,8 @@ local function completeLoad(subject)
 	return model
 end
 local function combatDouble()
-	local combat = { States = {}, Registrations = {}, Enabled = false }
+	local combat = { States = {}, Registrations = {}, Dressed = {}, Enabled = false }
+	function combat:DressCharacter(subject, model) self.Dressed[subject] = model end
 	function combat:Register(subject, model, teamId)
 		local state = { Subject = subject, Model = model, TeamId = teamId, Dead = false,
 			Humanoid = model:FindFirstChild("Humanoid"), Root = model:FindFirstChild("HumanoidRootPart") }
@@ -171,301 +180,278 @@ end
 local function remoteDouble()
 	local remote = { Calls = {} }
 	function remote:FireAllClients(...) table.insert(self.Calls, table.pack(...)) end
-	function remote:FireClient(subject, ...) table.insert(self.Calls, table.pack(...)) end
+	function remote:FireClient(subject, ...) local call = table.pack(...); call.Subject = subject; table.insert(self.Calls, call) end
 	return remote
 end
 
 -- INSERT_REAL_MODULES_HERE
-
-local Config = Modules.Config
-local MatchService = Modules.MatchService
-local Rules = Modules.MatchRules
+local Config, Rules, MatchService = Modules.Config, Modules.MatchRules, Modules.MatchService
 local passed = 0
-local function equal(actual, expected, message)
-	assert(actual == expected, (message or "unexpected value") .. ": expected " .. tostring(expected) .. ", got " .. tostring(actual))
-end
-local function test(name, callback)
-	callback()
-	passed += 1
-	print("PASS " .. name)
-end
-local function count(dictionary)
-	local total = 0
-	for _ in pairs(dictionary) do total += 1 end
-	return total
-end
+local teamA, teamB = Config.TeamOrder[1], Config.TeamOrder[2]
+local function equal(a, b, message) assert(a == b, (message or "unexpected value") .. ": " .. tostring(a) .. " ~= " .. tostring(b)) end
+local function test(name, callback) callback(); passed += 1; print("PASS " .. name) end
+local function count(values) local n = 0; for _ in pairs(values) do n += 1 end; return n end
 local function makeContext(names)
-	local combat = combatDouble()
-	local remotes = { Action = remoteDouble(), State = remoteDouble(), Effects = remoteDouble() }
-	local spawns = {}
-	for _, teamId in ipairs(Config.TeamOrder) do spawns[teamId] = { teamId .. "Spawn1", teamId .. "Spawn2" } end
-	local match = MatchService.new(remotes, { Spawns = spawns }, combat)
-	local bots = { PrepareCalls = 0, Created = 0, Models = {} }
-	function bots:Cleanup()
-		for _, model in ipairs(self.Models) do combat:Unregister(model); model:Destroy() end
-		self.Models = {}
-	end
-	function bots:Prepare(roster, round, epoch)
-		self.PrepareCalls += 1
-		for id, member in pairs(roster.Members) do
-			if member.IsBot then
-				local model = character(id)
-				table.insert(self.Models, model)
-				assert(match:RegisterBot(id, model, member.TeamId, round, epoch), "bot must register in its allocated slot")
-				self.Created += 1
-			end
-		end
-	end
-	match:SetBotService(bots)
-	local humans = {}
-	for _, name in ipairs(names) do
-		local human = player(name)
-		table.insert(humans, human)
-		match:AddPlayer(human)
-	end
-	local context = { Match = match, Combat = combat, Humans = humans, Bots = bots, Remotes = remotes }
-	function context:Advance(seconds)
-		clock += seconds
-		pump()
-		self.Match:Step(seconds)
-		pump()
-	end
-	function context:Kill(victim, killer)
-		local state = assert(self.Combat:GetState(victim), "missing victim combat state")
-		state.Dead = true
-		state.Humanoid.Health = 0
-		self.Combat.OnDeath(state, killer and self.Combat:GetState(killer) or nil)
-	end
-	match:Start()
-	return context
+    local combat = combatDouble()
+    local remotes = {Action = remoteDouble(), State = remoteDouble(), Effects = remoteDouble(), Lobby = remoteDouble()}
+    local profiles = {Awards = {}}
+    function profiles:AwardMatch(id, roster, winner) table.insert(self.Awards, {Id = id, Roster = roster, Winner = winner}); return true end
+    local spawns = {}
+    for _, teamId in ipairs(Config.TeamOrder) do spawns[teamId] = {teamId .. "Spawn1", teamId .. "Spawn2"} end
+    local match = MatchService.new(remotes, {Spawns = spawns, LobbySpawns = {"LobbySpawn1", "LobbySpawn2"}}, combat, profiles)
+    local ctx = {Match = match, Combat = combat, Remotes = remotes, Profiles = profiles, Humans = {}}
+    for _, name in ipairs(names) do local human = player(name); table.insert(ctx.Humans, human); match:AddPlayer(human); completeLoad(human) end
+    function ctx:Advance(seconds) clock += seconds; pump(); self.Match:Step(seconds); pump() end
+    function ctx:Lobby(who)
+        for index = #self.Remotes.Lobby.Calls, 1, -1 do local call = self.Remotes.Lobby.Calls[index]; if call.Subject == who then return call[1] end end
+        error("missing lobby snapshot")
+    end
+    function ctx:Invite(mode, members)
+        members = members or self.Humans
+        local payload = {Mode = mode, OpponentUserId = (mode == "Duel" and members[2] or members[3]).UserId}
+        if mode == "Teams" then payload.AllyUserId = members[2].UserId; payload.OpponentAllyUserId = members[4].UserId end
+        local accepted, reason = self.Match:HandleLobbyAction(members[1], "Invite", payload)
+        assert(accepted, "invite refused: " .. tostring(reason))
+        local invite = assert(self:Lobby(members[1]).Outgoing)
+        return invite.Id
+    end
+    function ctx:Prepare(mode, members)
+        members = members or self.Humans
+        local id = self:Invite(mode, members)
+        local last = mode == "Duel" and 2 or 4
+        for index = 2, last do assert(self.Match:HandleLobbyAction(members[index], "InviteRespond", {InviteId = id, Accept = true})) end
+        equal(self.Match.Phase, "Preparing")
+    end
+    function ctx:Battle(mode, members)
+        members = members or self.Humans; self:Prepare(mode, members)
+        local last = mode == "Duel" and 2 or 4
+        for index = 1, last do completeLoad(members[index]) end
+        self:Advance(0.1); equal(self.Match.Phase, "Battle")
+    end
+    function ctx:Kill(victim, killer)
+        local state = assert(self.Combat:GetState(victim)); state.Dead = true; state.Humanoid.Health = 0
+        self.Combat.OnDeath(state, killer and self.Combat:GetState(killer) or nil)
+    end
+    match:Start()
+    return ctx
 end
 
-local context = makeContext({ "Alice", "Bob", "Celine", "David" })
-local match = context.Match
-local humans = context.Humans
-local teamA = Config.TeamOrder[1]
-local teamB = Config.TeamOrder[2]
+local context = makeContext({"Alice", "Bob", "Celine", "David"})
+local match, humans = context.Match, context.Humans
 
-test("real MatchService starts in intermission without spawning spectators", function()
-	equal(match.Phase, "Intermission")
-	equal(context.Combat.Enabled, false)
-	for _, human in ipairs(humans) do equal(human.Loads, 0) end
+test("humans spawn in a physical protected lobby with no automatic battle", function()
+    equal(match.Phase, "Lobby"); equal(context.Combat.Enabled, false)
+    for _, human in ipairs(humans) do
+        equal(human.Loads, 1); equal(human:GetAttribute("Activity"), "Lobby"); equal(human:GetAttribute("Spectating"), false)
+        equal(context.Combat:GetState(human), nil); equal(context.Combat.Dressed[human], human.Character)
+        assert(human.Character:FindFirstChild("LobbyProtection"))
+    end
+    context:Advance(120); equal(match.Phase, "Lobby"); equal(match.Roster, nil)
+    for _, human in ipairs(humans) do equal(human.Loads, 1) end
 end)
 
-test("preparation allocates exactly four actors and waits for asynchronous loads", function()
-	context:Advance(Config.Game.IntermissionSeconds)
-	equal(match.Phase, "Preparing")
-	equal(count(match.Roster.Members), 4)
-	equal(match.Roster.Locked, true)
-	for _, human in ipairs(humans) do equal(human.Loads, 1) end
-	for index = 1, 3 do completeLoad(humans[index]) end
-	context:Advance(0.1)
-	equal(match.Phase, "Preparing", "three loaded characters cannot start a battle")
-	equal(context.Combat.Enabled, false)
-	equal(count(context.Combat.States), 3)
-	equal(context.Bots.Created, 0)
+test("two versus two starts loading only after every invited human consents", function()
+    local id = context:Invite("Teams")
+    for index = 2, 3 do
+        assert(match:HandleLobbyAction(humans[index], "InviteRespond", {InviteId = id, Accept = true}))
+        equal(match.Phase, "Lobby")
+        for _, human in ipairs(humans) do equal(human.Loads, 1) end
+    end
+    assert(match:HandleLobbyAction(humans[4], "InviteRespond", {InviteId = id, Accept = true}))
+    equal(match.Phase, "Preparing"); equal(count(match.Roster.Members), 4); equal(match.Roster.Locked, true)
+    equal(Rules.Get(match.Roster, humans[1]).TeamId, teamA); equal(Rules.Get(match.Roster, humans[2]).TeamId, teamA)
+    equal(Rules.Get(match.Roster, humans[3]).TeamId, teamB); equal(Rules.Get(match.Roster, humans[4]).TeamId, teamB)
+    for _, human in ipairs(humans) do equal(human.Loads, 2); equal(human:GetAttribute("Activity"), "Preparing") end
 end)
 
-test("battle starts only after the fourth valid combatant loads", function()
-	completeLoad(humans[4])
-	context:Advance(0.1)
-	equal(match.Phase, "Battle")
-	equal(context.Combat.Enabled, true)
-	equal(count(context.Combat.States), 4)
-	local alive = Rules.CountAlive(match.Roster)
-	equal(alive[teamA], 2)
-	equal(alive[teamB], 2)
-	for _, human in ipairs(humans) do
-		assert(context.Combat:GetState(human).SpawnProtectedUntil >= clock, "protection starts when the entire roster is ready")
-	end
+test("the arena remains disabled until all four asynchronous loads are valid", function()
+    for index = 1, 3 do completeLoad(humans[index]) end
+    context:Advance(0.1); equal(match.Phase, "Preparing"); equal(context.Combat.Enabled, false); equal(count(context.Combat.States), 3)
+    completeLoad(humans[4]); context:Advance(0.1)
+    equal(match.Phase, "Battle"); equal(context.Combat.Enabled, true); equal(count(context.Combat.States), 4)
+    equal(Rules.CountAlive(match.Roster)[teamA], 2); equal(Rules.CountAlive(match.Roster)[teamB], 2)
+    for _, human in ipairs(humans) do
+        equal(human:GetAttribute("Activity"), "Battle")
+        assert(context.Combat:GetState(human).SpawnProtectedUntil >= clock + Config.Game.SpawnProtectionSeconds - 0.001)
+    end
 end)
 
-test("one death is permanent after both four and ten seconds", function()
-	context:Kill(humans[1], humans[2])
-	context:Advance(4)
-	equal(match.Phase, "Battle")
-	equal(humans[1].Loads, 1)
-	equal(match:SpawnPlayer(humans[1]), false, "public spawning must refuse a dead actor during Battle")
-	context:Advance(6)
-	equal(humans[1].Loads, 1)
-	equal(Rules.CountAlive(match.Roster)[teamA], 1)
-	equal(humans[1]:GetAttribute("Eliminated"), true)
-	equal(humans[1]:GetAttribute("Spectating"), true)
-	equal(context.Bots.Created, 0, "death must not recruit a replacement bot")
+test("an eliminated member remains dead and cannot request a battle respawn", function()
+    context:Kill(humans[1], humans[3]); context:Advance(4)
+    equal(match.Phase, "Battle"); equal(match:SpawnPlayer(humans[1]), false)
+    context:Advance(6); equal(humans[1].Loads, 2); equal(Rules.CountAlive(match.Roster)[teamA], 1)
+    equal(humans[1]:GetAttribute("Eliminated"), true); equal(humans[1]:GetAttribute("Spectating"), true)
+    equal(count(match.Roster.Members), 4)
 end)
 
-test("an unsolicited character load cannot revive an eliminated member", function()
-	local replacement = character("UnsolicitedReset")
-	humans[1].Character = replacement
-	humans[1].CharacterAdded:Fire(replacement)
-	equal(replacement.Parent, nil, "unsolicited character must be destroyed")
-	equal(Rules.Get(match.Roster, humans[1]).Eliminated, true)
-	equal(Rules.CountAlive(match.Roster)[teamA], 1)
+test("unsolicited character loads cannot revive dead members", function()
+    local replacement = character("UnsolicitedReset"); humans[1].Character = replacement; humans[1].CharacterAdded:Fire(replacement)
+    equal(replacement.Parent, nil); equal(Rules.Get(match.Roster, humans[1]).Eliminated, true)
+    equal(Rules.CountAlive(match.Roster)[teamA], 1)
 end)
 
-local late = player("LateArrival")
-test("a late arrival remains outside the locked round", function()
-	match:AddPlayer(late)
-	equal(late.Loads, 0)
-	equal(late:GetAttribute("Spectating"), true)
-	equal(Rules.Get(match.Roster, late), nil)
-	equal(context.Combat:GetState(late), nil)
-	equal(count(match.Roster.Members), 4)
+local late = player("LateVisitor")
+local lateModel
+
+test("a late visitor stays alive in the lobby outside the locked arena roster", function()
+    match:AddPlayer(late); lateModel = completeLoad(late)
+    equal(late:GetAttribute("Activity"), "Lobby"); equal(late:GetAttribute("Spectating"), false)
+    equal(context.Combat:GetState(late), nil); equal(Rules.Get(match.Roster, late), nil)
+    equal(count(match.Roster.Members), 4); equal(late.Loads, 1)
+    assert(lateModel.Parent)
 end)
 
-test("eliminating the second teammate awards the other team one round", function()
-	context:Kill(humans[3], humans[2])
-	context:Advance(0.1)
-	equal(match.Phase, "Intermission")
-	equal(match.Winner, teamB)
-	equal(match.Scores[teamB], 1)
-	equal(match.Scores[teamA], 0)
-	equal(context.Combat.Enabled, false)
-	equal(count(context.Combat.States), 0)
+test("elimination rewards one completed match and Results touch only participants", function()
+    context:Kill(humans[2], humans[3]); context:Advance(0.1)
+    equal(match.Phase, "Results"); equal(match.Winner, teamB); equal(match.Scores[teamB], 1)
+    equal(context.Combat.Enabled, false); equal(count(context.Combat.States), 0)
+    equal(#context.Profiles.Awards, 1); equal(context.Profiles.Awards[1].Winner, teamB)
+    for _, human in ipairs(humans) do equal(human:GetAttribute("Activity"), "Results") end
+    equal(late:GetAttribute("Activity"), "Lobby"); equal(late.Character, lateModel); assert(lateModel.Parent)
+    context:Advance(1); equal(#context.Profiles.Awards, 1)
 end)
 
-test("a new round loads four fresh characters and resets elimination", function()
-	context:Advance(Config.Game.IntermissionSeconds)
-	equal(match.Phase, "Preparing")
-	equal(match.Round, 2)
-	equal(count(match.Roster.Members), 4)
-	for _, human in ipairs(humans) do
-		equal(human.Loads, 2)
-		equal(human:GetAttribute("Eliminated"), false)
-		completeLoad(human)
-	end
-	equal(late.Loads, 0, "a fifth waiting player is not inserted into a full roster")
-	context:Advance(0.1)
-	equal(match.Phase, "Battle")
-	equal(Rules.CountAlive(match.Roster)[teamA], 2)
-	equal(Rules.CountAlive(match.Roster)[teamB], 2)
+test("results return participants to the lobby without recruiting or restarting", function()
+    context:Advance(Config.Game.ResultSeconds)
+    equal(match.Phase, "Lobby"); equal(match.Roster, nil)
+    for _, human in ipairs(humans) do
+        equal(human:GetAttribute("Activity"), "Lobby"); equal(human:GetAttribute("Spectating"), false)
+        equal(human:GetAttribute("TeamId"), nil); completeLoad(human); equal(human.Loads, 3)
+    end
+    equal(late.Loads, 1); equal(late.Character, lateModel); assert(lateModel.Parent)
+    context:Advance(120); equal(match.Phase, "Lobby"); equal(count(context.Combat.States), 0)
+    equal(#context.Profiles.Awards, 1)
 end)
 
-test("disconnecting a participant eliminates its slot without reinforcement", function()
-	match:RemovePlayer(humans[1])
-	humans[1].Parent = nil
-	context:Advance(10)
-	equal(match.Phase, "Battle")
-	equal(count(match.Roster.Members), 4)
-	equal(Rules.CountAlive(match.Roster)[teamA], 1)
-	equal(Rules.Get(match.Roster, humans[1]).Eliminated, true)
-	equal(late.Loads, 0)
-	equal(Rules.Get(match.Roster, late), nil)
-	equal(context.Bots.Created, 0)
+test("a duel contains exactly its two consenting humans with no bots or lobby visitors", function()
+    local ctx = makeContext({"DuelA", "DuelB", "VisitorA", "VisitorB"})
+    ctx:Battle("Duel")
+    equal(ctx.Match.Roster.TeamSize, 1); equal(count(ctx.Match.Roster.Members), 2); equal(count(ctx.Combat.States), 2)
+    for index = 1, 2 do equal(Rules.Get(ctx.Match.Roster, ctx.Humans[index]).IsBot, false) end
+    for index = 3, 4 do equal(ctx.Humans[index].Loads, 1); equal(ctx.Humans[index]:GetAttribute("Activity"), "Lobby") end
+    ctx:Kill(ctx.Humans[1], ctx.Humans[2]); ctx:Advance(0.1)
+    equal(ctx.Match.Phase, "Results"); equal(ctx.Match.Winner, teamB); equal(#ctx.Profiles.Awards, 1)
 end)
 
-test("a waiting player can fill the disconnected slot during the next preparation", function()
-	context:Kill(humans[3], humans[2])
-	context:Advance(0.1)
-	equal(match.Phase, "Intermission")
-	context:Advance(Config.Game.IntermissionSeconds)
-	equal(match.Phase, "Preparing")
-	equal(count(match.Roster.Members), 4)
-	equal(Rules.Get(match.Roster, humans[1]), nil)
-	assert(Rules.Get(match.Roster, late), "late arrival must enter the next available round")
-	equal(late.Loads, 1)
-	for index = 2, 4 do completeLoad(humans[index]) end
-	completeLoad(late)
-	context:Advance(0.1)
-	equal(match.Phase, "Battle")
-	equal(count(context.Combat.States), 4)
+test("lobby invite snapshots use server deadlines and show incoming only to their recipients", function()
+    local ctx = makeContext({"ClockA", "ClockB", "ClockVisitor"}); local id = ctx:Invite("Duel")
+    local own, incoming, visitor = ctx:Lobby(ctx.Humans[1]), ctx:Lobby(ctx.Humans[2]), ctx:Lobby(ctx.Humans[3])
+    equal(own.Outgoing.Id, id); equal(own.Incoming, nil); equal(incoming.Incoming.Id, id); equal(incoming.Outgoing, nil)
+    equal(own.InviteCooldownUntil, 100000 + clock + 15); equal(own.Outgoing.ExpiresAt, 100000 + clock + 25)
+    equal(visitor.Incoming, nil); equal(visitor.Outgoing, nil); equal(visitor.ArenaBusy, false)
+    equal(own.Outgoing.Members[1].TeamId, teamA); equal(own.Outgoing.Members[2].TeamId, teamB)
 end)
 
-test("bot-filled slots still wait for a human and never refill an eliminated bot", function()
-	local solo = makeContext({ "Solo" })
-	solo:Advance(Config.Game.IntermissionSeconds)
-	equal(solo.Match.Phase, "Preparing")
-	equal(solo.Bots.Created, 3)
-	equal(count(solo.Match.Roster.Members), 4)
-	solo:Advance(0.1)
-	equal(solo.Match.Phase, "Preparing", "ready bots cannot start without the loading human")
-	completeLoad(solo.Humans[1])
-	solo:Advance(0.1)
-	equal(solo.Match.Phase, "Battle")
-	solo:Kill(solo.Bots.Models[1], solo.Humans[1])
-	solo:Advance(10)
-	equal(solo.Match.Phase, "Battle")
-	equal(solo.Bots.Created, 3)
-	equal(count(solo.Match.Roster.Members), 4)
+test("decline, cancel and expiry keep players in the lobby and do not load combat characters", function()
+    for _, outcome in ipairs({"Decline", "Cancel", "Expire"}) do
+        local ctx = makeContext({outcome .. "A", outcome .. "B"}); local id = ctx:Invite("Duel")
+        if outcome == "Decline" then assert(ctx.Match:HandleLobbyAction(ctx.Humans[2], "InviteRespond", {InviteId = id, Accept = false}))
+        elseif outcome == "Cancel" then assert(ctx.Match:HandleLobbyAction(ctx.Humans[1], "InviteCancel", {InviteId = id}))
+        else ctx:Advance(25) end
+        equal(ctx.Match.Phase, "Lobby"); equal(ctx.Match.Roster, nil); equal(ctx:Lobby(ctx.Humans[2]).Incoming, nil)
+        for _, human in ipairs(ctx.Humans) do equal(human.Loads, 1) end
+        equal(#ctx.Profiles.Awards, 0)
+    end
 end)
 
-test("a deferred final death still counts its kill and death exactly once", function()
-	local delayed = makeContext({ "DeferredA", "DeferredB", "DeferredC", "DeferredD" })
-	delayed:Advance(Config.Game.IntermissionSeconds)
-	for _, human in ipairs(delayed.Humans) do completeLoad(human) end
-	delayed:Advance(0.1)
-	local killer = delayed.Humans[2]
-	delayed:Kill(delayed.Humans[1], killer)
-	local victim = delayed.Humans[3]
-	local victimState = assert(delayed.Combat:GetState(victim))
-	local killerState = assert(delayed.Combat:GetState(killer))
-	-- CombatService marks death immediately and defers its OnDeath callback.
-	victimState.Dead = true
-	victimState.Humanoid.Health = 0
-	delayed:Advance(0.1)
-	equal(delayed.Match.Phase, "Intermission", "Step may end the round before the notification runs")
-	equal(delayed.Match.Winner, teamB)
-	local function statistic(subject, name)
-		return subject:FindFirstChild("leaderstats"):FindFirstChild(name).Value
-	end
-	equal(statistic(killer, "Kills"), 1)
-	equal(statistic(victim, "Deaths"), 0)
-	delayed.Combat.OnDeath(victimState, killerState)
-	equal(statistic(killer, "Kills"), 2)
-	equal(statistic(victim, "Deaths"), 1)
-	equal(#delayed.Remotes.Effects.Calls, 2, "each actual kill produces one killfeed entry")
-	delayed.Combat.OnDeath(victimState, killerState)
-	equal(statistic(killer, "Kills"), 2)
-	equal(statistic(victim, "Deaths"), 1)
-	equal(#delayed.Remotes.Effects.Calls, 2)
-	equal(delayed.Match.Scores[teamB], 1)
+test("an arena occupied by one group cancels other pending invites without moving them", function()
+    local ctx = makeContext({"GroupA", "GroupB", "WaitingA", "WaitingB"})
+    local waiting = {ctx.Humans[3], ctx.Humans[4]}; local waitingId = ctx:Invite("Duel", waiting)
+    ctx:Prepare("Duel")
+    equal(ctx:Lobby(waiting[1]).Outgoing, nil); equal(ctx:Lobby(waiting[2]).Incoming, nil)
+    local accepted, reason = ctx.Match:HandleLobbyAction(waiting[2], "InviteRespond", {InviteId = waitingId, Accept = true})
+    equal(accepted, false); equal(reason, "UnknownInvite")
+    accepted, reason = ctx.Match:HandleLobbyAction(waiting[2], "Invite", {Mode = "Duel", OpponentUserId = waiting[1].UserId})
+    equal(accepted, false); equal(reason, "ArenaBusy")
+    for _, human in ipairs(waiting) do equal(human.Loads, 1); equal(human:GetAttribute("Activity"), "Lobby") end
 end)
 
-test("an old load finishing in a new preparation cannot abort or populate that round", function()
-	local loading = makeContext({ "LoadingA", "LoadingB", "LoadingC", "LoadingD" })
-	loading:Advance(Config.Game.IntermissionSeconds)
-	for index = 1, 3 do completeLoad(loading.Humans[index]) end
-	local slow = loading.Humans[4]
-	equal(slow.Loads, 1)
-	loading:Advance(Config.Game.PreparingTimeoutSeconds)
-	equal(loading.Match.Phase, "Intermission", "incomplete preparation must time out")
-	equal(count(loading.Combat.States), 0)
-	loading:Advance(Config.Game.IntermissionSeconds)
-	equal(loading.Match.Phase, "Preparing")
-	equal(loading.Match.Round, 2)
-	equal(slow.Loads, 1, "new character load must wait for the in-flight old call")
-	local staleModel = completeLoad(slow)
-	equal(staleModel.Parent, nil, "stale result must be destroyed")
-	equal(staleModel.WaitCalls or 0, 0, "stale models must be rejected before waiting for missing children")
-	equal(loading.Combat:GetState(slow), nil, "old model must not register in the new roster")
-	equal(slow.Loads, 2, "the serialized loader must proceed to the new request")
-	assert(slow.LoadThread, "fresh request must now be waiting for its own result")
-	loading:Advance(0.1)
-	equal(loading.Match.Phase, "Preparing", "stale CharacterAdded must not abort the fresh preparation")
-	for _, human in ipairs(loading.Humans) do completeLoad(human) end
-	loading:Advance(0.1)
-	equal(loading.Match.Phase, "Battle")
-	equal(count(loading.Combat.States), 4)
-	for _, human in ipairs(loading.Humans) do
-		equal(human.Loads, 2)
-		equal(loading.Combat:GetState(human).Model:GetAttribute("MatchRound"), 2)
-	end
+test("disconnecting a battle participant forfeits without awarding farming coins", function()
+    local ctx = makeContext({"LeaveA", "LeaveB", "LeaveC", "LeaveD"}); ctx:Battle("Teams")
+    ctx.Match:RemovePlayer(ctx.Humans[1]); ctx.Humans[1].Parent = nil
+    equal(ctx.Match.Phase, "Results"); equal(ctx.Match.Winner, teamB); equal(#ctx.Profiles.Awards, 0)
+    ctx:Advance(Config.Game.ResultSeconds); equal(ctx.Match.Phase, "Lobby"); equal(#ctx.Profiles.Awards, 0)
+    for index = 2, 4 do equal(ctx.Humans[index]:GetAttribute("Activity"), "Lobby") end
 end)
 
-test("same-step double elimination produces a draw in the real match service", function()
-	local knockout = makeContext({ "DrawA", "DrawB", "DrawC", "DrawD" })
-	knockout:Advance(Config.Game.IntermissionSeconds)
-	for _, human in ipairs(knockout.Humans) do completeLoad(human) end
-	knockout:Advance(0.1)
-	for _, state in pairs(knockout.Combat.States) do
-		state.Dead = true
-		state.Humanoid.Health = 0
-	end
-	knockout:Advance(0.1)
-	equal(knockout.Match.Phase, "Intermission")
-	equal(knockout.Match.Winner, nil)
-	equal(knockout.Match.Scores[teamA], 0)
-	equal(knockout.Match.Scores[teamB], 0)
+test("disconnecting during preparation aborts safely and awards nobody", function()
+    local ctx = makeContext({"PrepareLeaveA", "PrepareLeaveB", "SafeVisitor"}); local visitor = ctx.Humans[3].Character
+    ctx:Prepare("Duel"); completeLoad(ctx.Humans[1])
+    ctx.Match:RemovePlayer(ctx.Humans[2]); ctx.Humans[2].Parent = nil
+    equal(ctx.Match.Phase, "Lobby"); equal(ctx.Match.Roster, nil); equal(count(ctx.Combat.States), 0)
+    equal(#ctx.Profiles.Awards, 0); equal(ctx.Humans[3].Character, visitor); assert(visitor.Parent)
+end)
+
+test("stale loads finishing during a new preparation cannot abort or populate it", function()
+    local ctx = makeContext({"SlowA", "SlowB", "SlowC", "SlowD"}); ctx:Prepare("Teams")
+    for index = 1, 3 do completeLoad(ctx.Humans[index]) end
+    ctx:Advance(Config.Game.PreparingTimeoutSeconds)
+    equal(ctx.Match.Phase, "Lobby"); equal(count(ctx.Combat.States), 0); equal(#ctx.Profiles.Awards, 0)
+    ctx:Prepare("Teams")
+    equal(ctx.Match.Round, 2)
+    for _, human in ipairs(ctx.Humans) do
+        local stale = completeLoad(human)
+        equal(stale.Parent, nil); equal(stale.WaitCalls or 0, 0, "stale model must be refused before WaitForChild")
+        equal(ctx.Combat:GetState(human), nil)
+        assert(human.LoadThread, "new serialized load must follow the old one")
+    end
+    ctx:Advance(0.1); equal(ctx.Match.Phase, "Preparing")
+    for _, human in ipairs(ctx.Humans) do completeLoad(human) end
+    ctx:Advance(0.1); equal(ctx.Match.Phase, "Battle"); equal(count(ctx.Combat.States), 4)
+    for _, human in ipairs(ctx.Humans) do equal(ctx.Combat:GetState(human).Model:GetAttribute("MatchRound"), 2) end
+end)
+
+test("same step double elimination produces a draw and one server reward request", function()
+    local ctx = makeContext({"DrawA", "DrawB"}); ctx:Battle("Duel")
+    for _, state in pairs(ctx.Combat.States) do state.Dead = true; state.Humanoid.Health = 0 end
+    ctx:Advance(0.1)
+    equal(ctx.Match.Phase, "Results"); equal(ctx.Match.Winner, nil); equal(ctx.Match.Scores[teamA], 0); equal(ctx.Match.Scores[teamB], 0)
+    equal(#ctx.Profiles.Awards, 1); equal(ctx.Profiles.Awards[1].Winner, nil)
+end)
+
+test("a deferred final death counts kill and death exactly once through Results", function()
+    local ctx = makeContext({"DeferredA", "DeferredB"}); ctx:Battle("Duel")
+    local victim, killer = ctx.Humans[1], ctx.Humans[2]
+    local victimState, killerState = ctx.Combat:GetState(victim), ctx.Combat:GetState(killer)
+    victimState.Dead = true; victimState.Humanoid.Health = 0; ctx:Advance(0.1)
+    equal(ctx.Match.Phase, "Results")
+    local function stat(who, name) return who:FindFirstChild("leaderstats"):FindFirstChild(name).Value end
+    equal(stat(victim, "Deaths"), 0)
+    ctx.Combat.OnDeath(victimState, killerState); ctx.Combat.OnDeath(victimState, killerState)
+    equal(stat(victim, "Deaths"), 1); equal(stat(killer, "Kills"), 1)
+    equal(#ctx.Remotes.Effects.Calls, 1); equal(#ctx.Profiles.Awards, 1); equal(ctx.Match.Scores[teamB], 1)
+end)
+
+test("profile availability is rechecked before the last consent starts combat", function()
+    local ctx = makeContext({"ReadyA", "ReadyB"}); local id = ctx:Invite("Duel")
+    ctx.Humans[1]:SetAttribute("ProfileLoaded", false)
+    local accepted, reason = ctx.Match:HandleLobbyAction(ctx.Humans[2], "InviteRespond", {InviteId = id, Accept = true})
+    equal(accepted, false); equal(reason, "PlayerUnavailable"); equal(ctx.Match.Phase, "Lobby")
+    equal(ctx.Humans[1].Loads, 1); equal(ctx.Humans[2].Loads, 1)
+end)
+
+test("malformed, duplicate and missing team ids cannot reserve a partial roster", function()
+    local ctx = makeContext({"BadA", "BadB", "BadC", "BadD"}); local a, b, c, d = table.unpack(ctx.Humans)
+    for _, payload in ipairs({
+        {Mode = "Teams", OpponentUserId = c.UserId, OpponentAllyUserId = d.UserId},
+        {Mode = "Teams", AllyUserId = b.UserId, OpponentUserId = c.UserId},
+        {Mode = "Teams", AllyUserId = b.UserId, OpponentUserId = c.UserId, OpponentAllyUserId = b.UserId},
+        {Mode = "Duel", OpponentUserId = a.UserId}, {Mode = "Farm", OpponentUserId = b.UserId},
+        {Mode = "Duel", OpponentUserId = 999999},
+    }) do equal(ctx.Match:HandleLobbyAction(a, "Invite", payload), false) end
+    equal(ctx.Match.Phase, "Lobby"); equal(ctx.Match.Roster, nil)
+    for _, human in ipairs(ctx.Humans) do equal(ctx:Lobby(human).Outgoing, nil); equal(ctx:Lobby(human).Incoming, nil) end
+    ctx:Prepare("Teams"); equal(count(ctx.Match.Roster.Members), 4)
+end)
+
+test("a lobby death reloads only that visitor and never creates a combat state", function()
+    local ctx = makeContext({"LobbyDead", "LobbyAlive"}); local other = ctx.Humans[2].Character
+    ctx.Humans[1].Character:FindFirstChild("Humanoid").Health = 0
+    ctx:Advance(0.1); ctx:Advance(Config.Game.LobbyRespawnSeconds)
+    equal(ctx.Humans[1].Loads, 2); completeLoad(ctx.Humans[1])
+    equal(ctx.Humans[1]:GetAttribute("Activity"), "Lobby"); equal(ctx.Humans[1]:GetAttribute("Spectating"), false)
+    equal(ctx.Combat:GetState(ctx.Humans[1]), nil); equal(ctx.Humans[2].Character, other)
+    equal(ctx.Humans[2].Loads, 1); equal(ctx.Match.Phase, "Lobby")
 end)
 
 print(tostring(passed) .. " real MatchService lifecycle tests passed; 0 failed")
